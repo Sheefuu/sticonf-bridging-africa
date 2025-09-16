@@ -15,19 +15,19 @@ const Header = () => {
         </div>
         
         <nav className="hidden md:flex items-center space-x-6 ml-auto mr-4">
-          <a href="#home" className="text-foreground hover:text-primary transition-colors">
+          <a href="/" className="text-foreground hover:text-primary transition-colors">
             Home
           </a>
-          <a href="#about" className="text-foreground hover:text-primary transition-colors">
+          <a href="/about" className="text-foreground hover:text-primary transition-colors">
             About
           </a>
-          <a href="#schedule" className="text-foreground hover:text-primary transition-colors">
+          <a href="/schedule" className="text-foreground hover:text-primary transition-colors">
             Schedule
           </a>
-          <a href="#sponsorship" className="text-foreground hover:text-primary transition-colors">
+          <a href="/sponsorship" className="text-foreground hover:text-primary transition-colors">
             Sponsorship
           </a>
-          <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+          <a href="/contact" className="text-foreground hover:text-primary transition-colors">
             Contact
           </a>
         </nav>
