@@ -18,24 +18,21 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-accent">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 text-accent">
               STIConf 2026
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-4 font-medium">
+            <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium">
               International Conference on Science, Technology and Innovation
             </p>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-white">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-12 text-white">
               Bridging the Tech Divide – Africa's Path to Global Competitiveness
             </h2>
-            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Join global leaders, innovators, and researchers as we chart Africa's path to technological excellence and economic transformation through Science, Technology and Innovation.
-            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="text-lg px-8 py-4 bg-white text-blue-900 hover:bg-white/90">
                 Register Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-white/80 text-white hover:bg-white/10 hover:text-white hover:border-white">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 border-white text-white bg-white/10 hover:bg-white hover:text-primary transition-all duration-300">
                 Learn More
               </Button>
             </div>
