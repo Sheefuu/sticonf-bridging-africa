@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Target, Users, Trophy, BookOpen } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const About = () => {
   return (
@@ -259,6 +260,8 @@ const About = () => {
           </Card>
         </section>
       </div>
+      
+      <Footer />
     </div>
   );
 };

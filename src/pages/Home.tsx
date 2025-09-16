@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, Target, Globe } from "lucide-react";
 import ImageSlider from "@/components/ImageSlider";
+import Footer from "@/components/Footer";
 
 const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Image Slider */}
-      <section className="py-16 px-4 bg-gradient-hero">
+      <section className="py-16 px-4 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900">
         <div className="container mx-auto">
           <ImageSlider />
         </div>
@@ -30,11 +31,11 @@ const Home = () => {
               Join global leaders, innovators, and researchers as we chart Africa's path to technological excellence and economic transformation through Science, Technology and Innovation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg px-8 py-4">
+              <Button size="lg" className="text-lg px-8 py-4 bg-white text-blue-900 hover:bg-white/90">
                 Register Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-white text-white hover:bg-white/10">
                 Learn More
               </Button>
             </div>
@@ -42,44 +43,45 @@ const Home = () => {
         </div>
       </section>
 
-
       {/* Key Highlights */}
       <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Conference Highlights</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Conference Highlights
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               A platform for transformative dialogue and collaboration
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-8 rounded-lg bg-card border border-border/50 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="h-8 w-8 text-primary" />
+            <div className="group text-center p-8 rounded-xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Users className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">Global Network</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-4 text-primary">Global Network</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Connect with policymakers, researchers, innovators, and industry leaders from across Africa and beyond.
               </p>
             </div>
             
-            <div className="text-center p-8 rounded-lg bg-card border border-border/50 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Target className="h-8 w-8 text-accent" />
+            <div className="group text-center p-8 rounded-xl bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/20 hover:shadow-xl hover:shadow-accent/20 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-accent to-accent/80 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Target className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">Innovation Focus</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-4 text-accent">Innovation Focus</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Showcase cutting-edge innovations, startups, and research addressing Africa's development challenges.
               </p>
             </div>
             
-            <div className="text-center p-8 rounded-lg bg-card border border-border/50 hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Globe className="h-8 w-8 text-primary" />
+            <div className="group text-center p-8 rounded-xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Globe className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">Global Competitiveness</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-4 text-primary">Global Competitiveness</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Position Africa as a global player in AI, biotechnology, renewable energy, and industrial innovation.
               </p>
             </div>
@@ -88,19 +90,35 @@ const Home = () => {
       </section>
 
       {/* Conference Theme */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-gradient-to-br from-muted/30 to-muted/50">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">Conference Theme</h2>
-            <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-8 border border-border/50">
-              <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-primary">
-                "Bridging the Tech Divide – Africa's Path to Global Competitiveness in Science, Technology and Innovation"
-              </h3>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Science, Technology and Innovation (STI) are the driving forces of economic transformation in the 21st century. 
-                For Africa, the technology divide presents both a challenge and an opportunity. This conference will focus on 
-                bridging the technology divide through collaboration, knowledge exchange, and scalable innovation ecosystems.
-              </p>
+          <div className="max-w-5xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Conference Theme
+            </h2>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl blur-xl"></div>
+              <div className="relative bg-gradient-to-br from-card to-card/80 backdrop-blur-sm rounded-2xl p-10 border border-border/50 shadow-2xl">
+                <div className="mb-8">
+                  <div className="inline-block p-3 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full mb-6">
+                    <div className="w-6 h-6 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+                  </div>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-8 text-foreground leading-tight">
+                  "Bridging the Tech Divide – Africa's Path to Global Competitiveness in Science, Technology and Innovation"
+                </h3>
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+                  Science, Technology and Innovation (STI) are the driving forces of economic transformation in the 21st century. 
+                  For Africa, the technology divide presents both a challenge and an opportunity. This conference will focus on 
+                  bridging the technology divide through collaboration, knowledge exchange, and scalable innovation ecosystems.
+                </p>
+                <div className="mt-8 flex justify-center">
+                  <div className="flex items-center gap-2 text-sm text-primary font-medium">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    Shaping Africa's Digital Future
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -119,6 +137,8 @@ const Home = () => {
           </Button>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

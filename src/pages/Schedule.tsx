@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, Calendar } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const Schedule = () => {
   return (
@@ -258,6 +259,8 @@ const Schedule = () => {
           </Card>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

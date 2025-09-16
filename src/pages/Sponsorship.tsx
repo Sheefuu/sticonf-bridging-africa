@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Crown, Award, Gem } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const Sponsorship = () => {
   const sponsorshipPackages = [
@@ -275,6 +276,8 @@ const Sponsorship = () => {
           </Card>
         </section>
       </div>
+      
+      <Footer />
     </div>
   );
 };
