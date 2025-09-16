@@ -6,14 +6,14 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Image Slider */}
-      <section className="py-16 px-4 bg-background">
+      <section className="py-16 px-4 bg-gradient-hero">
         <div className="container mx-auto">
           <ImageSlider />
         </div>
       </section>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden bg-gradient-hero">
+      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
@@ -44,7 +44,7 @@ const Home = () => {
 
 
       {/* Key Highlights */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-background">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Conference Highlights</h2>
@@ -88,7 +88,7 @@ const Home = () => {
       </section>
 
       {/* Conference Theme */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">Conference Theme</h2>
@@ -107,7 +107,7 @@ const Home = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 px-4 bg-gradient-to-r from-primary/10 to-accent/10">
+      <section className="py-20 px-4 bg-background">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Shape Africa's Future?</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
