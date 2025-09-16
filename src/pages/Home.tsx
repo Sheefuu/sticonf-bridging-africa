@@ -19,8 +19,7 @@ const Home = () => {
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
-              International Conference on Science,<br />
-              Technology & Innovation
+              International Conference on Science, Technology & Innovation
             </h1>
             <p className="text-2xl md:text-3xl text-accent mb-8 font-bold">
               STIConf 2026
