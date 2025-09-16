@@ -35,7 +35,7 @@ const Home = () => {
                 Register Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-white text-white hover:bg-white/10">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-primary">
                 Learn More
               </Button>
             </div>
@@ -107,11 +107,6 @@ const Home = () => {
                 <h3 className="text-2xl md:text-3xl font-bold mb-8 text-foreground leading-tight">
                   "Bridging the Tech Divide – Africa's Path to Global Competitiveness in Science, Technology and Innovation"
                 </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-                  Science, Technology and Innovation (STI) are the driving forces of economic transformation in the 21st century. 
-                  For Africa, the technology divide presents both a challenge and an opportunity. This conference will focus on 
-                  bridging the technology divide through collaboration, knowledge exchange, and scalable innovation ecosystems.
-                </p>
                 <div className="mt-8 flex justify-center">
                   <div className="flex items-center gap-2 text-sm text-primary font-medium">
                     <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
@@ -124,19 +119,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 px-4 bg-background">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Shape Africa's Future?</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join us at STIConf 2026 and be part of the transformation
-          </p>
-          <Button size="lg" className="text-lg px-8 py-4">
-            Register Today
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
-      </section>
 
       <Footer />
     </div>

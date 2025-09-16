@@ -1,4 +1,5 @@
 import footerImage from "@/assets/footer-cta.png";
+import sticonfLogo from "@/assets/sticonf-logo.png";
 
 const Footer = () => {
   return (
@@ -24,8 +25,8 @@ const Footer = () => {
             {/* Conference Info */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-blue-600 font-bold text-lg">STI</span>
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2">
+                  <img src={sticonfLogo} alt="STIConf Logo" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold">STIConf 2026</h3>
