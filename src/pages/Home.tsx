@@ -18,15 +18,19 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 text-accent">
-              STIConf 2026
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
+              International Conference on Science,<br />
+              Technology & Innovation
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium">
-              International Conference on Science, Technology and Innovation
+            <p className="text-2xl md:text-3xl text-accent mb-8 font-bold">
+              STIConf 2026
             </p>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-12 text-white">
-              Bridging the Tech Divide – Africa's Path to Global Competitiveness
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-white">
+              Bridging the Tech Divide
             </h2>
+            <p className="text-lg md:text-xl text-accent mb-12 font-medium">
+              Africa's Path to Global Competitiveness in Science, Technology and Innovation
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="text-lg px-8 py-4 bg-white text-blue-900 hover:bg-white/90">
                 Register Now
