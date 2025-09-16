@@ -19,7 +19,7 @@ const Schedule = () => {
             <CardContent className="pt-6">
               <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Date</h3>
-              <p className="text-muted-foreground">March 15-17, 2025</p>
+              <p className="text-muted-foreground">March 15-17, 2026</p>
             </CardContent>
           </Card>
 
@@ -47,7 +47,7 @@ const Schedule = () => {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Badge variant="outline" className="text-lg px-3 py-1">Day 1</Badge>
-                March 15, 2025 - Opening & Keynotes
+                March 15, 2026 - Opening & Keynotes
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -105,7 +105,7 @@ const Schedule = () => {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Badge variant="outline" className="text-lg px-3 py-1">Day 2</Badge>
-                March 16, 2025 - Technology & Innovation
+                March 16, 2026 - Technology & Innovation
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -163,7 +163,7 @@ const Schedule = () => {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Badge variant="outline" className="text-lg px-3 py-1">Day 3</Badge>
-                March 17, 2025 - Collaboration & Future
+                March 17, 2026 - Collaboration & Future
               </CardTitle>
             </CardHeader>
             <CardContent>

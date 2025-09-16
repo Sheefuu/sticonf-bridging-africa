@@ -109,7 +109,7 @@ const Sponsorship = () => {
             Partner with us to shape Africa's future in Science, Technology and Innovation
           </p>
           <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-6 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-semibold mb-2">STIConf 2025 - 2nd Edition</h2>
+            <h2 className="text-2xl font-semibold mb-2">STIConf 2026 - 2nd Edition</h2>
             <p className="text-lg text-muted-foreground">"...the future is NOW!"</p>
           </div>
         </div>
@@ -178,7 +178,7 @@ const Sponsorship = () => {
         <section className="mb-16">
           <Card className="border-border/50 bg-gradient-to-r from-primary/5 to-accent/5">
             <CardHeader>
-              <CardTitle className="text-2xl text-center">Why Sponsor STIConf 2025?</CardTitle>
+              <CardTitle className="text-2xl text-center">Why Sponsor STIConf 2026?</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-8">

@@ -1,24 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, Target, Globe } from "lucide-react";
+import ImageSlider from "@/components/ImageSlider";
 
 const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
+      <section className="relative py-20 px-4 overflow-hidden bg-gradient-hero">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              STIConf 2025
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+              STIConf 2026
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-4 font-medium">
+            <p className="text-xl md:text-2xl text-white/90 mb-4 font-medium">
               International Conference on Science, Technology and Innovation
             </p>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-foreground">
+            <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-white">
               Bridging the Tech Divide – Africa's Path to Global Competitiveness
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
               Join global leaders, innovators, and researchers as we chart Africa's path to technological excellence and economic transformation through Science, Technology and Innovation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -31,6 +32,19 @@ const Home = () => {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Image Slider */}
+      <section className="py-16 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Conference Gallery</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Highlights from previous conferences and upcoming events
+            </p>
+          </div>
+          <ImageSlider />
         </div>
       </section>
 
@@ -102,7 +116,7 @@ const Home = () => {
         <div className="container mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Shape Africa's Future?</h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join us at STIConf 2025 and be part of the transformation
+            Join us at STIConf 2026 and be part of the transformation
           </p>
           <Button size="lg" className="text-lg px-8 py-4">
             Register Today

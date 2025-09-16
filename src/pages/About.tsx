@@ -6,7 +6,7 @@ const About = () => {
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">About STIConf 2025</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">About STIConf 2026</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             A high-level platform for shaping Africa's path to global competitiveness in Science, Technology and Innovation
           </p>
@@ -27,7 +27,7 @@ const About = () => {
                 in digital inclusion.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                The International Conference on Science, Technology and Innovation (STICONF) 2025 seeks to provide a high-level 
+                The International Conference on Science, Technology and Innovation (STICONF) 2026 seeks to provide a high-level 
                 platform for policy makers, researchers, innovators, industry leaders, development partners, and youth innovators 
                 to chart Africa's path to global competitiveness. The conference will focus on bridging the technology divide through 
                 collaboration, knowledge exchange, investment in research, and scalable innovation ecosystems that position Africa as 
@@ -246,7 +246,7 @@ const About = () => {
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Roadmap for Africa's Global Competitiveness in STI (2025–2035)</span>
+                      <span>Roadmap for Africa's Global Competitiveness in STI (2026–2036)</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
