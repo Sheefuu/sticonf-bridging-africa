@@ -25,7 +25,7 @@ const Footer = () => {
             {/* Conference Info */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2">
+                <div className="w-12 h-12 flex items-center justify-center">
                   <img src={sticonfLogo} alt="STIConf Logo" className="w-full h-full object-contain" />
                 </div>
                 <div>
