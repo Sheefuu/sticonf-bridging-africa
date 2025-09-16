@@ -13,7 +13,7 @@ const Home = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900">
+      <section className="relative py-20 px-4 overflow-hidden bg-gradient-hero">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
