@@ -14,7 +14,7 @@ const Header = () => {
           <div className="text-lg font-semibold text-primary">STIConf 2026</div>
         </div>
         
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-6 ml-auto mr-4">
           <a href="#home" className="text-foreground hover:text-primary transition-colors">
             Home
           </a>
