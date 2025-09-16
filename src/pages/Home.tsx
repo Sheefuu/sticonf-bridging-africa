@@ -18,7 +18,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/10"></div>
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-accent">
               STIConf 2026
             </h1>
             <p className="text-xl md:text-2xl text-white/90 mb-4 font-medium">
@@ -35,7 +35,7 @@ const Home = () => {
                 Register Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-primary">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-white/80 text-white hover:bg-white/10 hover:text-white hover:border-white">
                 Learn More
               </Button>
             </div>
