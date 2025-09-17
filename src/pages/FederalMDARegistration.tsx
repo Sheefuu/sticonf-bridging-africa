@@ -26,11 +26,6 @@ const FederalMDARegistration = () => {
   
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FederalMDAFormData>();
 
-  const calculateTotal = () => {
-    let exhibitionFee = wantsExhibition ? 500000 : 0;
-    let conferenceFee = wantsConference ? 250000 * numberOfParticipants : 0;
-    return exhibitionFee + conferenceFee;
-  };
 
   const onSubmit = async (data: FederalMDAFormData) => {
     setIsSubmitting(true);
@@ -38,19 +33,12 @@ const FederalMDARegistration = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
     
-    const total = calculateTotal();
-    const exhibitionFee = wantsExhibition ? 500000 : 0;
-    const conferenceFee = wantsConference ? 250000 : 0;
-    
     const params = new URLSearchParams({
       type: 'government',
       subtype: 'federal',
       wantsExhibition: wantsExhibition.toString(),
       wantsConference: wantsConference.toString(),
-      numberOfParticipants: numberOfParticipants.toString(),
-      exhibitionFee: exhibitionFee.toString(),
-      conferenceFee: conferenceFee.toString(),
-      totalAmount: total.toString()
+      numberOfParticipants: numberOfParticipants.toString()
     });
     window.location.href = `/registration/payment?${params.toString()}`;
   };
@@ -154,7 +142,7 @@ const FederalMDARegistration = () => {
                     <Label htmlFor="exhibition" className="text-sm font-medium">
                       Exhibition Booth
                     </Label>
-                    <p className="text-xs text-muted-foreground">₦500,000</p>
+                    <p className="text-xs text-muted-foreground">Showcase your services and initiatives</p>
                   </div>
                 </div>
 
@@ -173,7 +161,7 @@ const FederalMDARegistration = () => {
                       <Label htmlFor="conference" className="text-sm font-medium">
                         Conference Participation
                       </Label>
-                      <p className="text-xs text-muted-foreground">₦250,000 per participant</p>
+                      <p className="text-xs text-muted-foreground">Access to all conference sessions and networking</p>
                     </div>
                   </div>
                   
@@ -196,13 +184,6 @@ const FederalMDARegistration = () => {
                   )}
                 </div>
 
-                {/* Total Preview */}
-                <div className="pt-3 border-t border-border">
-                  <div className="flex justify-between items-center font-semibold">
-                    <span>Estimated Total:</span>
-                    <span className="text-primary">₦{calculateTotal().toLocaleString()}</span>
-                  </div>
-                </div>
               </div>
 
               <Button 

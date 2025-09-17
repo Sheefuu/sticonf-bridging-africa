@@ -47,23 +47,6 @@ const OrganizationRegistration = () => {
     }
   };
 
-  const calculateTotal = () => {
-    let exhibitionFee = 0;
-    let conferenceFee = 0;
-    
-    if (wantsExhibition) {
-      if (selectedSector === "education") exhibitionFee = 350000;
-      else if (selectedSector === "professional-bodies") exhibitionFee = 500000;
-      else if (selectedSector === "product-company") exhibitionFee = 350000;
-    }
-    
-    if (wantsConference) {
-      if (selectedSector === "professional-bodies") conferenceFee = 300000 * numberOfParticipants;
-      else if (selectedSector === "product-company") conferenceFee = 250000 * numberOfParticipants;
-    }
-    
-    return exhibitionFee + conferenceFee;
-  };
 
   const onSubmit = async (data: OrganizationFormData) => {
     setIsSubmitting(true);
@@ -71,31 +54,13 @@ const OrganizationRegistration = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
     
-    const total = calculateTotal();
-    let exhibitionFee = 0;
-    let conferenceFee = 0;
-    
-    if (wantsExhibition) {
-      if (selectedSector === "education") exhibitionFee = 350000;
-      else if (selectedSector === "professional-bodies") exhibitionFee = 500000;
-      else if (selectedSector === "product-company") exhibitionFee = 350000;
-    }
-    
-    if (wantsConference) {
-      if (selectedSector === "professional-bodies") conferenceFee = 300000;
-      else if (selectedSector === "product-company") conferenceFee = 250000;
-    }
-    
     // Redirect to payment with organization details
     const params = new URLSearchParams({
       type: 'organization',
       sector: selectedSector,
       wantsExhibition: wantsExhibition.toString(),
       wantsConference: wantsConference.toString(),
-      numberOfParticipants: numberOfParticipants.toString(),
-      exhibitionFee: exhibitionFee.toString(),
-      conferenceFee: conferenceFee.toString(),
-      totalAmount: total.toString()
+      numberOfParticipants: numberOfParticipants.toString()
     });
     window.location.href = `/registration/payment?${params.toString()}`;
   };
@@ -220,9 +185,7 @@ const OrganizationRegistration = () => {
                         {selectedSector === "education" && " (Required)"}
                       </Label>
                       <p className="text-xs text-muted-foreground">
-                        {selectedSector === "education" && "₦350,000"}
-                        {selectedSector === "professional-bodies" && "₦500,000"}  
-                        {selectedSector === "product-company" && "₦350,000"}
+                        Showcase your products and services
                       </p>
                     </div>
                   </div>
@@ -244,8 +207,7 @@ const OrganizationRegistration = () => {
                             Conference Participation
                           </Label>
                           <p className="text-xs text-muted-foreground">
-                            {selectedSector === "professional-bodies" && "₦300,000 per participant"}
-                            {selectedSector === "product-company" && "₦250,000 per participant"}
+                            Access to all conference sessions and networking
                           </p>
                         </div>
                       </div>
@@ -270,13 +232,6 @@ const OrganizationRegistration = () => {
                     </div>
                   )}
 
-                  {/* Total Preview */}
-                  <div className="pt-3 border-t border-border">
-                    <div className="flex justify-between items-center font-semibold">
-                      <span>Estimated Total:</span>
-                      <span className="text-primary">₦{calculateTotal().toLocaleString()}</span>
-                    </div>
-                  </div>
                 </div>
               )}
 
