@@ -1,10 +1,42 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowLeft, CreditCard } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Footer from "@/components/Footer";
 
 const Payment = () => {
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get('type') || 'individual';
+  const sector = searchParams.get('sector') || '';
+  const amount = searchParams.get('amount') || '200000';
+  
+  const getRegistrationTitle = () => {
+    if (type === 'organization') {
+      switch (sector) {
+        case 'education':
+          return 'STIConf 2026 - Organization Registration (Education)';
+        case 'professional-bodies':
+          return 'STIConf 2026 - Organization Registration (Professional Bodies)';
+        case 'product-company':
+          return 'STIConf 2026 - Organization Registration (Product Company)';
+        default:
+          return 'STIConf 2026 - Organization Registration';
+      }
+    }
+    return 'STIConf 2026 - Individual Registration';
+  };
+  
+  const getRegistrationFeeLabel = () => {
+    if (type === 'organization') {
+      return 'Organization Registration Fee';
+    }
+    return 'Individual Registration Fee';
+  };
+  
+  const formatAmount = (amount: string) => {
+    return parseInt(amount).toLocaleString();
+  };
+  
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-3xl">
@@ -32,7 +64,7 @@ const Payment = () => {
           <CardContent className="p-8">
             {/* Registration Details */}
             <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold mb-4">STIConf 2026 - Individual Registration</h3>
+              <h3 className="text-xl font-semibold mb-4">{getRegistrationTitle()}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <p>• Access to all conference sessions</p>
                 <p>• Networking opportunities with industry leaders</p>
@@ -51,13 +83,13 @@ const Payment = () => {
               
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-3 border-b border-border/50">
-                  <span className="text-lg">Individual Registration Fee</span>
-                  <span className="text-lg font-semibold">₦200,000</span>
+                  <span className="text-lg">{getRegistrationFeeLabel()}</span>
+                  <span className="text-lg font-semibold">₦{formatAmount(amount)}</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b-2 border-primary/20">
                   <span className="text-xl font-semibold">Total Amount</span>
                   <div className="text-right">
-                    <div className="text-3xl font-bold text-primary">₦200,000</div>
+                    <div className="text-3xl font-bold text-primary">₦{formatAmount(amount)}</div>
                     <div className="text-sm text-muted-foreground">Nigerian Naira</div>
                   </div>
                 </div>

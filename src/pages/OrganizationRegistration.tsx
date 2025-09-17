@@ -27,7 +27,24 @@ const OrganizationRegistration = () => {
     console.log("Organization Registration Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    window.location.href = '/registration/payment';
+    
+    // Redirect based on sector with appropriate amounts
+    let amount: string;
+    switch (data.sector) {
+      case 'education':
+        amount = '350000';
+        break;
+      case 'professional-bodies':
+        amount = '500000';
+        break;
+      case 'product-company':
+        amount = '350000';
+        break;
+      default:
+        amount = '350000';
+    }
+    
+    window.location.href = `/registration/payment?type=organization&sector=${data.sector}&amount=${amount}`;
   };
 
   const handleSectorChange = (value: string) => {
