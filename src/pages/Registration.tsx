@@ -45,7 +45,10 @@ const Registration = () => {
                   <span className="text-sm">Certificate of participation</span>
                 </li>
               </ul>
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button 
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => window.location.href = '/registration/individual'}
+              >
                 Register as Individual
               </Button>
             </CardContent>
