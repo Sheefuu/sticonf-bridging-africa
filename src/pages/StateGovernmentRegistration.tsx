@@ -54,10 +54,10 @@ const StateGovernmentRegistration = () => {
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="organizationName">Name Of State</Label>
+                <Label htmlFor="organizationName">Name of State*</Label>
                 <Input
                   id="organizationName"
-                  placeholder="Enter your ministry, department, or agency name"
+                  placeholder="Enter your State"
                   {...register("organizationName", { 
                     required: "Ministry/Department/Agency name is required",
                     minLength: { value: 2, message: "Name must be at least 2 characters" }
