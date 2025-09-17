@@ -54,7 +54,7 @@ const StateGovernmentRegistration = () => {
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="organizationName">Ministry/Department/Agency Name *</Label>
+                <Label htmlFor="organizationName">Name Of State</Label>
                 <Input
                   id="organizationName"
                   placeholder="Enter your ministry, department, or agency name"
