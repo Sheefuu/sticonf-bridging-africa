@@ -1,9 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { User, Building, MapPin, Building2 } from "lucide-react";
+import { useState } from "react";
 import Footer from "@/components/Footer";
 
 const Registration = () => {
+  const [showGovernmentModal, setShowGovernmentModal] = useState(false);
+
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-5xl">
@@ -14,7 +18,7 @@ const Registration = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {/* Individual Registration */}
           <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
             <CardHeader className="text-center pb-6">
@@ -57,48 +61,71 @@ const Registration = () => {
             </CardContent>
           </Card>
 
-          {/* State Government Registration */}
-          <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          {/* Government Registration */}
+          <Card className="border-2 border-secondary/20 hover:border-secondary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
             <CardHeader className="text-center pb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <MapPin className="h-10 w-10 text-primary" />
+              <div className="w-20 h-20 bg-gradient-to-br from-secondary/10 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Building2 className="h-10 w-10 text-secondary" />
               </div>
-              <CardTitle className="text-2xl mb-4">State Government</CardTitle>
+              <CardTitle className="text-2xl mb-4">Government</CardTitle>
               <p className="text-muted-foreground">
-                For state ministries, departments, agencies, and parastatals
+                For state and federal government ministries, departments, and agencies
               </p>
             </CardHeader>
             <CardContent className="text-center">
               <Button 
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => window.location.href = '/registration/state-government'}
+                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                onClick={() => setShowGovernmentModal(true)}
               >
-                Register State Government
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Federal MDA Registration */}
-          <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-            <CardHeader className="text-center pb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Building2 className="h-10 w-10 text-primary" />
-              </div>
-              <CardTitle className="text-2xl mb-4">Federal MDA</CardTitle>
-              <p className="text-muted-foreground">
-                For federal ministries, departments, and agencies
-              </p>
-            </CardHeader>
-            <CardContent className="text-center">
-              <Button 
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => window.location.href = '/registration/federal-mda'}
-              >
-                Register Federal MDA
+                Select Government Type
               </Button>
             </CardContent>
           </Card>
         </div>
+
+        {/* Government Options Modal */}
+        <Dialog open={showGovernmentModal} onOpenChange={setShowGovernmentModal}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center text-2xl">Choose Government Type</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              {/* State Government Option */}
+              <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                    onClick={() => {
+                      setShowGovernmentModal(false);
+                      window.location.href = '/registration/state-government';
+                    }}>
+                <CardHeader className="text-center pb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">State Government</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    For state ministries, departments, agencies, and parastatals
+                  </p>
+                </CardHeader>
+              </Card>
+
+              {/* Federal MDA Option */}
+              <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                    onClick={() => {
+                      setShowGovernmentModal(false);
+                      window.location.href = '/registration/federal-mda';
+                    }}>
+                <CardHeader className="text-center pb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building2 className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">Federal MDA</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    For federal ministries, departments, and agencies
+                  </p>
+                </CardHeader>
+              </Card>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Contact Information */}
         <section className="mt-20">
