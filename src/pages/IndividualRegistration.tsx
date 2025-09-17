@@ -75,11 +75,11 @@ const IndividualRegistration = () => {
                 <Input
                   id="phoneNumber"
                   type="tel"
-                  placeholder="Enter your phone number"
+                  placeholder="e.g., 08012345678"
                   {...register("phoneNumber", { 
                     required: "Phone number is required",
                     pattern: {
-                      value: /^[\+]?[1-9][\d]{0,15}$/,
+                      value: /^[\+]?\d{1,16}$/,
                       message: "Please enter a valid phone number"
                     }
                   })}
