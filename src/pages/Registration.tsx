@@ -35,7 +35,7 @@ const Registration = () => {
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={() => window.location.href = '/registration/individual'}
               >
-                Register as Individual
+                Register Now
               </Button>
             </CardContent>
           </Card>
@@ -56,7 +56,7 @@ const Registration = () => {
                 className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
                 onClick={() => window.location.href = '/registration/organization'}
               >
-                Register as Organization
+                Register Now
               </Button>
             </CardContent>
           </Card>
@@ -77,7 +77,7 @@ const Registration = () => {
                 className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
                 onClick={() => setShowGovernmentModal(true)}
               >
-                Select Government Type
+               Register Now
               </Button>
             </CardContent>
           </Card>
