@@ -8,33 +8,108 @@ const Payment = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type') || 'individual';
   const sector = searchParams.get('sector') || '';
-  const amount = searchParams.get('amount') || '200000';
+  const category = searchParams.get('category') || '';
+  const subtype = searchParams.get('subtype') || '';
+  
+  // For complex pricing
+  const wantsExhibition = searchParams.get('wantsExhibition') === 'true';
+  const wantsConference = searchParams.get('wantsConference') === 'true';
+  const numberOfParticipants = parseInt(searchParams.get('numberOfParticipants') || '1');
+  const exhibitionFee = parseInt(searchParams.get('exhibitionFee') || '0');
+  const conferenceFee = parseInt(searchParams.get('conferenceFee') || '0');
+  const totalAmount = parseInt(searchParams.get('totalAmount') || searchParams.get('amount') || '200000');
   
   const getRegistrationTitle = () => {
+    if (type === 'individual') {
+      if (category === 'innovative-entrepreneurs') {
+        return 'STIConf 2026 - Individual Registration (Innovative Entrepreneurs)';
+      } else if (category === 'universities') {
+        return 'STIConf 2026 - Individual Registration (Universities)';
+      }
+      return 'STIConf 2026 - Individual Registration';
+    }
+    
     if (type === 'organization') {
       switch (sector) {
         case 'education':
-          return 'STIConf 2026 - Organization Registration (Education)';
+          return 'STIConf 2026 - Organization Registration (Universities/Higher Institutions)';
         case 'professional-bodies':
           return 'STIConf 2026 - Organization Registration (Professional Bodies)';
         case 'product-company':
-          return 'STIConf 2026 - Organization Registration (Product Company)';
+          return 'STIConf 2026 - Organization Registration (Product Companies)';
         default:
           return 'STIConf 2026 - Organization Registration';
       }
     }
-    return 'STIConf 2026 - Individual Registration';
-  };
-  
-  const getRegistrationFeeLabel = () => {
-    if (type === 'organization') {
-      return 'Organization Registration Fee';
+    
+    if (type === 'government') {
+      if (subtype === 'state') {
+        return 'STIConf 2026 - State Government Registration';
+      } else if (subtype === 'federal') {
+        return 'STIConf 2026 - Federal MDA Registration';
+      }
+      return 'STIConf 2026 - Government Registration';
     }
-    return 'Individual Registration Fee';
+    
+    return 'STIConf 2026 - Registration';
   };
   
-  const formatAmount = (amount: string) => {
-    return parseInt(amount).toLocaleString();
+  const formatAmount = (amount: number) => {
+    return amount.toLocaleString();
+  };
+
+  const renderPaymentBreakdown = () => {
+    if (type === 'individual') {
+      return (
+        <div className="space-y-4">
+          <div className="flex justify-between items-center py-3 border-b border-border/50">
+            <span className="text-lg">Conference Participation</span>
+            <span className="text-lg font-semibold">₦{formatAmount(200000)}</span>
+          </div>
+        </div>
+      );
+    }
+
+    if (type === 'government' && subtype === 'state') {
+      return (
+        <div className="space-y-4">
+          <div className="flex justify-between items-center py-3 border-b border-border/50">
+            <span className="text-lg">Exhibition Pavilion + 7 Participants</span>
+            <span className="text-lg font-semibold">₦{formatAmount(5500000)}</span>
+          </div>
+        </div>
+      );
+    }
+
+    // For organizations and federal government with itemized breakdown
+    const items = [];
+    
+    if (wantsExhibition && exhibitionFee > 0) {
+      let exhibitionLabel = 'Exhibition Booth';
+      if (type === 'government' && subtype === 'state') {
+        exhibitionLabel = 'Exhibition Pavilion';
+      }
+      items.push(
+        <div key="exhibition" className="flex justify-between items-center py-3 border-b border-border/50">
+          <span className="text-lg">{exhibitionLabel}</span>
+          <span className="text-lg font-semibold">₦{formatAmount(exhibitionFee)}</span>
+        </div>
+      );
+    }
+
+    if (wantsConference && conferenceFee > 0) {
+      const conferenceTotal = conferenceFee * numberOfParticipants;
+      items.push(
+        <div key="conference" className="flex justify-between items-center py-3 border-b border-border/50">
+          <span className="text-lg">
+            Conference Participation ({numberOfParticipants} participant{numberOfParticipants > 1 ? 's' : ''})
+          </span>
+          <span className="text-lg font-semibold">₦{formatAmount(conferenceTotal)}</span>
+        </div>
+      );
+    }
+
+    return <div className="space-y-4">{items}</div>;
   };
   
   return (
@@ -82,14 +157,11 @@ const Payment = () => {
               </div>
               
               <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-border/50">
-                  <span className="text-lg">{getRegistrationFeeLabel()}</span>
-                  <span className="text-lg font-semibold">₦{formatAmount(amount)}</span>
-                </div>
+                {renderPaymentBreakdown()}
                 <div className="flex justify-between items-center py-3 border-b-2 border-primary/20">
                   <span className="text-xl font-semibold">Total Amount</span>
                   <div className="text-right">
-                    <div className="text-3xl font-bold text-primary">₦{formatAmount(amount)}</div>
+                    <div className="text-3xl font-bold text-primary">₦{formatAmount(totalAmount)}</div>
                     <div className="text-sm text-muted-foreground">Nigerian Naira</div>
                   </div>
                 </div>

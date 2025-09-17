@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
@@ -13,19 +14,32 @@ interface IndividualFormData {
   phoneNumber: string;
   email: string;
   profession: string;
+  category: string;
 }
 
 const IndividualRegistration = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<IndividualFormData>();
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<IndividualFormData>();
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    setValue("category", value);
+  };
 
   const onSubmit = async (data: IndividualFormData) => {
     setIsSubmitting(true);
-    // Simulate form submission
     console.log("Individual Registration Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    window.location.href = '/registration/payment';
+    
+    // Redirect to payment with individual details
+    const params = new URLSearchParams({
+      type: 'individual',
+      category: data.category,
+      amount: '200000'
+    });
+    window.location.href = `/registration/payment?${params.toString()}`;
   };
 
   return (
@@ -107,6 +121,22 @@ const IndividualRegistration = () => {
                 />
                 {errors.email && (
                   <p className="text-sm text-destructive">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="category">Category *</Label>
+                <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+                  <SelectTrigger className={!selectedCategory ? "border-destructive" : ""}>
+                    <SelectValue placeholder="Select your category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="innovative-entrepreneurs">Innovative Entrepreneurs</SelectItem>
+                    <SelectItem value="universities">Universities (Students/Lecturers)</SelectItem>
+                  </SelectContent>
+                </Select>
+                {!selectedCategory && (
+                  <p className="text-sm text-destructive">Category is required</p>
                 )}
               </div>
 

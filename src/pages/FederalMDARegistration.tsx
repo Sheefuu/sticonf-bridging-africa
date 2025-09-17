@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
@@ -12,19 +13,46 @@ interface FederalMDAFormData {
   organizationName: string;
   email: string;
   phoneNumber: string;
+  wantsExhibition: boolean;
+  wantsConference: boolean;
+  numberOfParticipants: number;
 }
 
 const FederalMDARegistration = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<FederalMDAFormData>();
+  const [wantsExhibition, setWantsExhibition] = useState(true);
+  const [wantsConference, setWantsConference] = useState(false);
+  const [numberOfParticipants, setNumberOfParticipants] = useState(1);
+  
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FederalMDAFormData>();
+
+  const calculateTotal = () => {
+    let exhibitionFee = wantsExhibition ? 500000 : 0;
+    let conferenceFee = wantsConference ? 250000 * numberOfParticipants : 0;
+    return exhibitionFee + conferenceFee;
+  };
 
   const onSubmit = async (data: FederalMDAFormData) => {
     setIsSubmitting(true);
-    // Simulate form submission
     console.log("Federal MDA Registration Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    window.location.href = '/registration/payment';
+    
+    const total = calculateTotal();
+    const exhibitionFee = wantsExhibition ? 500000 : 0;
+    const conferenceFee = wantsConference ? 250000 : 0;
+    
+    const params = new URLSearchParams({
+      type: 'government',
+      subtype: 'federal',
+      wantsExhibition: wantsExhibition.toString(),
+      wantsConference: wantsConference.toString(),
+      numberOfParticipants: numberOfParticipants.toString(),
+      exhibitionFee: exhibitionFee.toString(),
+      conferenceFee: conferenceFee.toString(),
+      totalAmount: total.toString()
+    });
+    window.location.href = `/registration/payment?${params.toString()}`;
   };
 
   return (
@@ -107,6 +135,74 @@ const FederalMDARegistration = () => {
                 {errors.phoneNumber && (
                   <p className="text-sm text-destructive">{errors.phoneNumber.message}</p>
                 )}
+              </div>
+
+              <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+                <h4 className="font-semibold">Registration Options</h4>
+                
+                {/* Exhibition Option */}
+                <div className="flex items-start space-x-3">
+                  <Checkbox 
+                    id="exhibition"
+                    checked={wantsExhibition}
+                    onCheckedChange={(checked) => {
+                      setWantsExhibition(checked as boolean);
+                      setValue("wantsExhibition", checked as boolean);
+                    }}
+                  />
+                  <div className="space-y-1">
+                    <Label htmlFor="exhibition" className="text-sm font-medium">
+                      Exhibition Booth
+                    </Label>
+                    <p className="text-xs text-muted-foreground">₦500,000</p>
+                  </div>
+                </div>
+
+                {/* Conference Option */}
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox 
+                      id="conference"
+                      checked={wantsConference}
+                      onCheckedChange={(checked) => {
+                        setWantsConference(checked as boolean);
+                        setValue("wantsConference", checked as boolean);
+                      }}
+                    />
+                    <div className="space-y-1">
+                      <Label htmlFor="conference" className="text-sm font-medium">
+                        Conference Participation
+                      </Label>
+                      <p className="text-xs text-muted-foreground">₦250,000 per participant</p>
+                    </div>
+                  </div>
+                  
+                  {wantsConference && (
+                    <div className="ml-6 space-y-2">
+                      <Label htmlFor="participants">Number of Participants *</Label>
+                      <Input
+                        id="participants"
+                        type="number"
+                        min="1"
+                        value={numberOfParticipants}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value) || 1;
+                          setNumberOfParticipants(value);
+                          setValue("numberOfParticipants", value);
+                        }}
+                        className="w-32"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Total Preview */}
+                <div className="pt-3 border-t border-border">
+                  <div className="flex justify-between items-center font-semibold">
+                    <span>Estimated Total:</span>
+                    <span className="text-primary">₦{calculateTotal().toLocaleString()}</span>
+                  </div>
+                </div>
               </div>
 
               <Button 

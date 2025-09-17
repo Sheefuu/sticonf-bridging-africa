@@ -20,11 +20,17 @@ const StateGovernmentRegistration = () => {
 
   const onSubmit = async (data: StateGovernmentFormData) => {
     setIsSubmitting(true);
-    // Simulate form submission
     console.log("State Government Registration Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    window.location.href = '/registration/payment';
+    
+    // State Government: Fixed package ₦5,500,000 (Exhibition Pavilion + 7 participants)
+    const params = new URLSearchParams({
+      type: 'government',
+      subtype: 'state',
+      totalAmount: '5500000'
+    });
+    window.location.href = `/registration/payment?${params.toString()}`;
   };
 
   return (
