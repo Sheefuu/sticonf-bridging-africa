@@ -48,7 +48,10 @@ const Registration = () => {
               </p>
             </CardHeader>
             <CardContent className="text-center">
-              <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
+              <Button 
+                className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+                onClick={() => window.location.href = '/registration/organization'}
+              >
                 Register as Organization
               </Button>
             </CardContent>
@@ -66,7 +69,10 @@ const Registration = () => {
               </p>
             </CardHeader>
             <CardContent className="text-center">
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button 
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => window.location.href = '/registration/government'}
+              >
                 Register as Government
               </Button>
             </CardContent>
