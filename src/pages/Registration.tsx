@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { User, Building, Landmark } from "lucide-react";
+import { User, Building, MapPin, Building2 } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const Registration = () => {
@@ -14,7 +14,7 @@ const Registration = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           {/* Individual Registration */}
           <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
             <CardHeader className="text-center pb-6">
@@ -57,23 +57,44 @@ const Registration = () => {
             </CardContent>
           </Card>
 
-          {/* Government Registration */}
+          {/* State Government Registration */}
           <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
             <CardHeader className="text-center pb-6">
               <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Landmark className="h-10 w-10 text-primary" />
+                <MapPin className="h-10 w-10 text-primary" />
               </div>
-              <CardTitle className="text-2xl mb-4">Government</CardTitle>
+              <CardTitle className="text-2xl mb-4">State Government</CardTitle>
               <p className="text-muted-foreground">
-                For government agencies, ministries, and public institutions
+                For state ministries, departments, agencies, and parastatals
               </p>
             </CardHeader>
             <CardContent className="text-center">
               <Button 
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                onClick={() => window.location.href = '/registration/government'}
+                onClick={() => window.location.href = '/registration/state-government'}
               >
-                Register as Government
+                Register State Government
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Federal MDA Registration */}
+          <Card className="border-2 border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <CardHeader className="text-center pb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Building2 className="h-10 w-10 text-primary" />
+              </div>
+              <CardTitle className="text-2xl mb-4">Federal MDA</CardTitle>
+              <p className="text-muted-foreground">
+                For federal ministries, departments, and agencies
+              </p>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button 
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => window.location.href = '/registration/federal-mda'}
+              >
+                Register Federal MDA
               </Button>
             </CardContent>
           </Card>

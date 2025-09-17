@@ -4,35 +4,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ArrowLeft, Landmark } from "lucide-react";
+import { ArrowLeft, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 
-interface GovernmentFormData {
+interface StateGovernmentFormData {
   organizationName: string;
   email: string;
   phoneNumber: string;
-  governmentType: string;
 }
 
-const GovernmentRegistration = () => {
+const StateGovernmentRegistration = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedType, setSelectedType] = useState("");
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<GovernmentFormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<StateGovernmentFormData>();
 
-  const onSubmit = async (data: GovernmentFormData) => {
+  const onSubmit = async (data: StateGovernmentFormData) => {
     setIsSubmitting(true);
     // Simulate form submission
-    console.log("Government Registration Data:", data);
+    console.log("State Government Registration Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
     window.location.href = '/registration/payment';
-  };
-
-  const handleTypeChange = (value: string) => {
-    setSelectedType(value);
-    setValue("governmentType", value);
   };
 
   return (
@@ -51,71 +43,23 @@ const GovernmentRegistration = () => {
         <Card className="border-2 border-primary/20">
           <CardHeader className="text-center pb-6">
             <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Landmark className="h-10 w-10 text-primary" />
+              <MapPin className="h-10 w-10 text-primary" />
             </div>
-            <CardTitle className="text-3xl mb-4">Government Registration</CardTitle>
+            <CardTitle className="text-3xl mb-4">State Government Registration</CardTitle>
             <p className="text-muted-foreground">
-              Register your government agency for STIConf 2026
+              Register your state ministry, department, agency, or parastatal for STIConf 2026
             </p>
           </CardHeader>
           
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="space-y-4">
-                <Label className="text-base font-semibold">Government Type *</Label>
-                <RadioGroup
-                  value={selectedType}
-                  onValueChange={handleTypeChange}
-                  className="space-y-4"
-                >
-                  <Card className="border border-muted hover:border-primary/40 transition-colors">
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-3">
-                        <RadioGroupItem value="state-government" id="state-government" />
-                        <div className="space-y-1">
-                          <Label htmlFor="state-government" className="text-base font-medium cursor-pointer">
-                            State Government
-                          </Label>
-                          <p className="text-sm text-muted-foreground">
-                            State ministries, departments, agencies, and parastatals
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border border-muted hover:border-primary/40 transition-colors">
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-3">
-                        <RadioGroupItem value="federal-government-mda" id="federal-government-mda" />
-                        <div className="space-y-1">
-                          <Label htmlFor="federal-government-mda" className="text-base font-medium cursor-pointer">
-                            Federal Government MDAs
-                          </Label>
-                          <p className="text-sm text-muted-foreground">
-                            Federal ministries, departments, and agencies
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </RadioGroup>
-                <input
-                  type="hidden"
-                  {...register("governmentType", { required: "Government type selection is required" })}
-                />
-                {errors.governmentType && (
-                  <p className="text-sm text-destructive">{errors.governmentType.message}</p>
-                )}
-              </div>
-
               <div className="space-y-2">
-                <Label htmlFor="organizationName">Agency/Ministry Name *</Label>
+                <Label htmlFor="organizationName">Ministry/Department/Agency Name *</Label>
                 <Input
                   id="organizationName"
-                  placeholder="Enter your agency or ministry name"
+                  placeholder="Enter your ministry, department, or agency name"
                   {...register("organizationName", { 
-                    required: "Agency/Ministry name is required",
+                    required: "Ministry/Department/Agency name is required",
                     minLength: { value: 2, message: "Name must be at least 2 characters" }
                   })}
                   className={errors.organizationName ? "border-destructive" : ""}
@@ -182,4 +126,4 @@ const GovernmentRegistration = () => {
   );
 };
 
-export default GovernmentRegistration;
+export default StateGovernmentRegistration;

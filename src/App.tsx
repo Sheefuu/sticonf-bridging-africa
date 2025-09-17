@@ -12,7 +12,8 @@ import Contact from "./pages/Contact";
 import Registration from "./pages/Registration";
 import IndividualRegistration from "./pages/IndividualRegistration";
 import OrganizationRegistration from "./pages/OrganizationRegistration";
-import GovernmentRegistration from "./pages/GovernmentRegistration";
+import StateGovernmentRegistration from "./pages/StateGovernmentRegistration";
+import FederalMDARegistration from "./pages/FederalMDARegistration";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 
@@ -35,7 +36,8 @@ const App = () => (
           <Route path="/registration" element={<Registration />} />
           <Route path="/registration/individual" element={<IndividualRegistration />} />
           <Route path="/registration/organization" element={<OrganizationRegistration />} />
-          <Route path="/registration/government" element={<GovernmentRegistration />} />
+          <Route path="/registration/state-government" element={<StateGovernmentRegistration />} />
+          <Route path="/registration/federal-mda" element={<FederalMDARegistration />} />
           <Route path="/registration/payment" element={<Payment />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
