@@ -12,6 +12,7 @@ interface IndividualFormData {
   fullName: string;
   phoneNumber: string;
   email: string;
+  profession: string;
 }
 
 const IndividualRegistration = () => {
@@ -24,7 +25,7 @@ const IndividualRegistration = () => {
     console.log("Individual Registration Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    alert("Registration submitted successfully!");
+    window.location.href = '/registration/payment';
   };
 
   return (
@@ -109,6 +110,22 @@ const IndividualRegistration = () => {
                 )}
               </div>
 
+              <div className="space-y-2">
+                <Label htmlFor="profession">Profession *</Label>
+                <Input
+                  id="profession"
+                  placeholder="Enter your profession"
+                  {...register("profession", { 
+                    required: "Profession is required",
+                    minLength: { value: 2, message: "Profession must be at least 2 characters" }
+                  })}
+                  className={errors.profession ? "border-destructive" : ""}
+                />
+                {errors.profession && (
+                  <p className="text-sm text-destructive">{errors.profession.message}</p>
+                )}
+              </div>
+
               <Button 
                 type="submit" 
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
@@ -117,16 +134,6 @@ const IndividualRegistration = () => {
                 {isSubmitting ? "Submitting..." : "Complete Registration"}
               </Button>
             </form>
-
-            <div className="mt-8 p-4 bg-primary/5 rounded-lg">
-              <h4 className="font-semibold mb-2">What's Included:</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• Access to all conference sessions</li>
-                <li>• Networking opportunities</li>
-                <li>• Conference materials</li>
-                <li>• Certificate of participation</li>
-              </ul>
-            </div>
           </CardContent>
         </Card>
       </div>

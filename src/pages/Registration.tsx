@@ -27,24 +27,6 @@ const Registration = () => {
               </p>
             </CardHeader>
             <CardContent className="text-center">
-              <ul className="text-left mb-8 space-y-3">
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Access to all conference sessions</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Networking opportunities</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Conference materials</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Certificate of participation</span>
-                </li>
-              </ul>
               <Button 
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                 onClick={() => window.location.href = '/registration/individual'}
@@ -66,24 +48,6 @@ const Registration = () => {
               </p>
             </CardHeader>
             <CardContent className="text-center">
-              <ul className="text-left mb-8 space-y-3">
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-sm">Group registration discounts</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-sm">Exhibition opportunities</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-sm">Corporate networking sessions</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-sm">Partnership opportunities</span>
-                </li>
-              </ul>
               <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                 Register as Organization
               </Button>
@@ -102,24 +66,6 @@ const Registration = () => {
               </p>
             </CardHeader>
             <CardContent className="text-center">
-              <ul className="text-left mb-8 space-y-3">
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Policy dialogue sessions</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Government showcase opportunities</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Ministerial roundtables</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">Public-private partnerships</span>
-                </li>
-              </ul>
               <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                 Register as Government
               </Button>
