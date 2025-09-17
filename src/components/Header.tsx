@@ -32,8 +32,8 @@ const Header = () => {
           </a>
         </nav>
         
-        <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
-          Register Now
+        <Button className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+          <a href="/registration">Register Now</a>
         </Button>
       </div>
     </header>

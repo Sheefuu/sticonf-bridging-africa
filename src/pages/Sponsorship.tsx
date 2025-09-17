@@ -143,7 +143,7 @@ const Sponsorship = () => {
                       ))}
                     </ul>
                     <Button className="w-full mt-6">
-                      Choose {pkg.name}
+                      Contact Us
                     </Button>
                   </CardContent>
                 </Card>
@@ -166,7 +166,7 @@ const Sponsorship = () => {
                     )}
                     <div className="text-2xl font-bold text-primary mb-4">{option.price}</div>
                     <Button variant="outline" className="w-full">
-                      Select Option
+                      Learn More
                     </Button>
                   </div>
                 </CardContent>
