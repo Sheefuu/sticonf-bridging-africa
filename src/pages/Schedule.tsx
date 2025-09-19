@@ -48,54 +48,63 @@ const Schedule = () => {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Badge variant="outline" className="text-lg px-3 py-1">Day 1</Badge>
-                March 15, 2026 - Opening & Keynotes
+                March 15, 2026 - Opening & High-Level Plenary
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
+                {/* Opening Ceremony */}
                 <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">9:00 AM - 10:00 AM</span>
+                  <h4 className="text-lg font-semibold mb-3">Opening Ceremony</h4>
+                  <div className="space-y-3 text-muted-foreground">
+                    <p>• Welcome Remarks by National Coordinator, W2NP</p>
+                    <div>
+                      <p className="font-medium">Ministerial Addresses:</p>
+                      <div className="ml-4 space-y-1">
+                        <p>- Hon Minister, Federal Ministry of Innovation, Science And Technology</p>
+                        <p>- Hon Minister, Federal Ministry of Innovation, Communication and Digital Technology</p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-medium">Diplomatic Addresses:</p>
+                      <div className="ml-4 space-y-1">
+                        <p>- Country Director, UNDP</p>
+                        <p>- Country Director</p>
+                      </div>
+                    </div>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Registration & Welcome Reception</h4>
-                  <p className="text-muted-foreground">Registration desk opens, welcome coffee, and networking</p>
                 </div>
 
                 <div className="border-l-4 border-accent pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">10:00 AM - 11:30 AM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Opening Ceremony</h4>
-                  <p className="text-muted-foreground">Welcome addresses, conference overview, and official opening</p>
+                  <h4 className="text-lg font-semibold mb-1">Special Presentation</h4>
+                  <p className="text-muted-foreground">Global Perspectives on Africa's Innovation Trajectory by ECOWAS</p>
                 </div>
 
                 <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">12:00 PM - 1:30 PM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Keynote: "Africa's Digital Transformation"</h4>
-                  <p className="text-muted-foreground">Exploring opportunities and challenges in Africa's digital journey</p>
+                  <h4 className="text-lg font-semibold mb-1">Keynote Address</h4>
+                  <p className="text-muted-foreground">Africa's Readiness for the Global Tech Future by UNIDO</p>
                 </div>
 
                 <div className="border-l-4 border-accent pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">2:30 PM - 4:00 PM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Panel: "Policy Frameworks for Innovation"</h4>
-                  <p className="text-muted-foreground">Government representatives discuss policy initiatives</p>
+                  <h4 className="text-lg font-semibold mb-1">Science, Technology and Innovation as Drivers of Africa's Economic Transformation</h4>
                 </div>
 
-                <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">4:30 PM - 6:00 PM</span>
+                {/* Sub-sector 1 */}
+                <div className="border-l-4 border-primary pl-6 bg-muted/20 p-4 rounded-r-lg">
+                  <div className="mb-2">
+                    <Badge variant="secondary" className="mb-2">Sub-sector: Science & Research</Badge>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Innovation Showcase</h4>
-                  <p className="text-muted-foreground">African startups and innovations presentation</p>
+                  <h4 className="text-lg font-semibold mb-2">Plenary Topic: From Research to Market – Closing the Gap in Africa's Innovation Value Chain</h4>
+                  <p className="text-muted-foreground">Session: ARCN, NIPRD, NARRICT, RMRDC</p>
+                </div>
+
+                {/* Sub-sector 2 */}
+                <div className="border-l-4 border-accent pl-6 bg-muted/20 p-4 rounded-r-lg">
+                  <div className="mb-2">
+                    <Badge variant="secondary" className="mb-2">Sub-sector: Space Research, Telecomm, Digital Economy & AI</Badge>
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">Topic: Expanding Space tech, Telecom And Digital Infrastructure for Inclusive Growth</h4>
+                  <p className="text-muted-foreground">Session: NITDA, NASDRA, NCC, NIGCOMSAT</p>
                 </div>
               </div>
             </CardContent>
@@ -106,54 +115,37 @@ const Schedule = () => {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Badge variant="outline" className="text-lg px-3 py-1">Day 2</Badge>
-                March 16, 2026 - Technology & Innovation
+                March 16, 2026 - Sectoral Innovation Focus
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">9:00 AM - 10:30 AM</span>
+                {/* Sub-sector 1 */}
+                <div className="border-l-4 border-primary pl-6 bg-muted/20 p-4 rounded-r-lg">
+                  <div className="mb-2">
+                    <Badge variant="secondary" className="mb-2">Sub-sector: Biotechnology And Safety</Badge>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Keynote: "AI and Machine Learning in Africa"</h4>
-                  <p className="text-muted-foreground">Exploring artificial intelligence applications across African industries</p>
+                  <h4 className="text-lg font-semibold mb-2">Plenary: Biotechnology for Food Security, Health and Sustainability</h4>
+                  <p className="text-muted-foreground">Composition: NABDA, NBMA, NAFDAC, NIMR</p>
                 </div>
 
-                <div className="border-l-4 border-accent pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">11:00 AM - 12:30 PM</span>
+                {/* Sub-sector 2 */}
+                <div className="border-l-4 border-accent pl-6 bg-muted/20 p-4 rounded-r-lg">
+                  <div className="mb-2">
+                    <Badge variant="secondary" className="mb-2">Sub-sector: Engineering & Manufacturing</Badge>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Workshop: "Biotechnology & Healthcare Innovation"</h4>
-                  <p className="text-muted-foreground">Interactive session on biotech solutions for African healthcare</p>
+                  <h4 className="text-lg font-semibold mb-2">Keynotes: By NASENI, ECN</h4>
+                  <h4 className="text-lg font-semibold mb-2">Topic: Energy, Infrastructure Tech Development, Smart Manufacturing for industrial Transformation In Africa</h4>
+                  <p className="text-muted-foreground">Plenary: NASENI, UNIDO, ECN, MAN</p>
                 </div>
 
-                <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">2:00 PM - 3:30 PM</span>
+                {/* Sub-sector 3 */}
+                <div className="border-l-4 border-primary pl-6 bg-muted/20 p-4 rounded-r-lg">
+                  <div className="mb-2">
+                    <Badge variant="secondary" className="mb-2">Sub-sector: Solid Minerals & Natural Resources</Badge>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Panel: "Renewable Energy & Sustainability"</h4>
-                  <p className="text-muted-foreground">Sustainable energy solutions for Africa's future</p>
-                </div>
-
-                <div className="border-l-4 border-accent pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">4:00 PM - 5:30 PM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Youth Innovation Pitch Session</h4>
-                  <p className="text-muted-foreground">Young innovators present their solutions</p>
-                </div>
-
-                <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">6:00 PM - 8:00 PM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Networking Dinner</h4>
-                  <p className="text-muted-foreground">Evening networking event with industry leaders</p>
+                  <h4 className="text-lg font-semibold mb-2">Topic: Value Chain Development: From Raw Materials to Finished Products</h4>
+                  <p className="text-muted-foreground">Panel Session: RMRDC, SRMEA</p>
                 </div>
               </div>
             </CardContent>
@@ -164,7 +156,7 @@ const Schedule = () => {
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-3">
                 <Badge variant="outline" className="text-lg px-3 py-1">Day 3</Badge>
-                March 17, 2026 - Collaboration & Future
+                March 17, 2026 - Agriculture & Policy Engagement
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -172,46 +164,69 @@ const Schedule = () => {
                 <div className="border-l-4 border-primary pl-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">9:00 AM - 10:30 AM</span>
+                    <span className="text-sm text-muted-foreground">9:00 AM</span>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Keynote: "Global Partnerships for African Innovation"</h4>
-                  <p className="text-muted-foreground">Building international collaborations for technological advancement</p>
+                  <h4 className="text-lg font-semibold mb-1">Paper 1 - Agricultural Tech</h4>
+                  <p className="text-muted-foreground">Topic: AgriTech and Precision Farming for Sustainable Agriculture</p>
                 </div>
 
                 <div className="border-l-4 border-accent pl-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">11:00 AM - 12:30 PM</span>
+                    <span className="text-sm text-muted-foreground">9:45 AM</span>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Panel: "Investment & Funding Opportunities"</h4>
-                  <p className="text-muted-foreground">Venture capitalists and investors discuss funding landscape</p>
+                  <h4 className="text-lg font-semibold mb-1">Paper 2: Agro-Processing</h4>
+                  <p className="text-muted-foreground">Topic: Agro-processing, Value Addition and Global Trade</p>
+                </div>
+
+                <div className="border-l-4 border-primary pl-6">
+                  <h4 className="text-lg font-semibold mb-1">Tea Break</h4>
+                </div>
+
+                <div className="border-l-4 border-accent pl-6 bg-muted/20 p-4 rounded-r-lg">
+                  <h4 className="text-xl font-semibold mb-3">Closing & Policy Engagement</h4>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="font-semibold mb-2">Plenary Session</h5>
+                      <p className="text-muted-foreground mb-2">Topic: Policy, Investment and Capacity Building for Africa's STI Transformation</p>
+                      
+                      <div className="ml-4 space-y-2">
+                        <p className="text-sm"><strong>Keynotes:</strong></p>
+                        <div className="ml-4 space-y-1 text-sm">
+                          <p>• Policy by Federal Ministry of Innovation, Science and Technology</p>
+                          <p>• Investment by Federal Ministry of Industry, Trade and Investment</p>
+                          <p>• Capacity Building by Federal Ministry of Education</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="font-semibold mb-2">High-Level Panel: Government, Academia, Industry and Development Partners</h5>
+                      <p className="text-muted-foreground text-sm">Composition: FMITI, FMIST, FME, NUC, MAN, NASENI, UNIDO</p>
+                      <p className="text-muted-foreground text-sm">Moderator: ECOWAS</p>
+                    </div>
+
+                    <div>
+                      <h5 className="font-semibold mb-1">Launch of Conference Declaration/Communiqué</h5>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="border-l-4 border-primary pl-6">
                   <div className="flex items-center gap-3 mb-2">
                     <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">2:00 PM - 3:30 PM</span>
+                    <span className="text-sm text-muted-foreground">8:00 PM</span>
                   </div>
-                  <h4 className="text-lg font-semibold mb-1">Workshop: "Building Innovation Ecosystems"</h4>
-                  <p className="text-muted-foreground">Practical strategies for creating supportive innovation environments</p>
+                  <h4 className="text-lg font-semibold mb-1">Closing Ceremony/Award</h4>
                 </div>
 
                 <div className="border-l-4 border-accent pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">4:00 PM - 5:00 PM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Conference Recommendations</h4>
-                  <p className="text-muted-foreground">Presentation of policy recommendations and action plans</p>
+                  <h4 className="text-lg font-semibold mb-1">Closing Keynote: Innovating Africa's Future Together</h4>
                 </div>
 
                 <div className="border-l-4 border-primary pl-6">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">5:00 PM - 6:00 PM</span>
-                  </div>
-                  <h4 className="text-lg font-semibold mb-1">Closing Ceremony</h4>
-                  <p className="text-muted-foreground">Closing remarks, awards, and future outlook</p>
+                  <h4 className="text-lg font-semibold mb-1">Vote of Thanks & Networking Reception</h4>
                 </div>
               </div>
             </CardContent>
