@@ -233,6 +233,84 @@ const Schedule = () => {
           </Card>
         </div>
 
+        {/* Programme Sub-Themes */}
+        <div className="mt-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Programme Sub-Themes</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Explore the key themes that will shape discussions throughout the conference
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {/* Science & Research */}
+            <Card className="border-border/50 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Science & Research</h3>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-muted-foreground">From Labs to Markets: Commercializing African Research Outputs</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Space Research, Telecom, Digital Economy & AI */}
+            <Card className="border-border/50 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Space Research, Telecom, Digital Economy & AI</h3>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-muted-foreground">Expanding Space Research, Telecomm and Digital Infrastructure for Inclusive Growth</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Biotechnology */}
+            <Card className="border-border/50 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Biotechnology</h3>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-muted-foreground">Biotechnology for Health, Food Security and Environmental Sustainability</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Engineering & Manufacturing */}
+            <Card className="border-border/50 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Engineering & Manufacturing</h3>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-muted-foreground">Smart Manufacturing and Industrial Transformation in Africa</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Agriculture & Food Systems */}
+            <Card className="border-border/50 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Agriculture & Food Systems</h3>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-muted-foreground">AgriTech and Precision Farming for Sustainable Agriculture</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Solid Minerals & Natural Resources */}
+            <Card className="border-border/50 hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-3 text-primary">Solid Minerals & Natural Resources</h3>
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <p className="text-muted-foreground">Value Chain Development: From Raw Materials to Finished Products</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
         {/* Additional Information */}
         <div className="mt-16">
           <Card className="border-border/50 bg-muted/30">
