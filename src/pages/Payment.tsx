@@ -15,9 +15,54 @@ const Payment = () => {
   const wantsExhibition = searchParams.get('wantsExhibition') === 'true';
   const wantsConference = searchParams.get('wantsConference') === 'true';
   const numberOfParticipants = parseInt(searchParams.get('numberOfParticipants') || '1');
-  const exhibitionFee = parseInt(searchParams.get('exhibitionFee') || '0');
-  const conferenceFee = parseInt(searchParams.get('conferenceFee') || '0');
-  const totalAmount = parseInt(searchParams.get('totalAmount') || searchParams.get('amount') || '200000');
+  
+  // Dynamic fee calculation based on registration type and options
+  const calculateFees = () => {
+    let exhibitionFee = 0;
+    let conferenceFee = 0;
+    let totalAmount = 0;
+
+    if (type === 'individual') {
+      // Individuals: ₦200,000 flat rate for both categories
+      totalAmount = 200000;
+      return { exhibitionFee: 0, conferenceFee: 200000, totalAmount };
+    }
+
+    if (type === 'government' && subtype === 'state') {
+      // State Government: ₦5,500,000 flat package
+      totalAmount = 5500000;
+      return { exhibitionFee: 0, conferenceFee: 0, totalAmount };
+    }
+
+    if (type === 'organization') {
+      if (sector === 'education') {
+        // Universities/Higher Institutions: ₦350,000 (Exhibition only)
+        exhibitionFee = wantsExhibition ? 350000 : 0;
+        totalAmount = exhibitionFee;
+      } else if (sector === 'professional-bodies') {
+        // Professional Bodies: Exhibition ₦500,000 + Conference ₦300,000 × participants
+        exhibitionFee = wantsExhibition ? 500000 : 0;
+        conferenceFee = wantsConference ? 300000 : 0;
+        totalAmount = exhibitionFee + (conferenceFee * numberOfParticipants);
+      } else if (sector === 'product-company') {
+        // Product Companies: Exhibition ₦350,000 + Conference ₦250,000 × participants
+        exhibitionFee = wantsExhibition ? 350000 : 0;
+        conferenceFee = wantsConference ? 250000 : 0;
+        totalAmount = exhibitionFee + (conferenceFee * numberOfParticipants);
+      }
+    }
+
+    if (type === 'government' && subtype === 'federal') {
+      // Federal MDAs: Exhibition ₦500,000 + Conference ₦250,000 × participants
+      exhibitionFee = wantsExhibition ? 500000 : 0;
+      conferenceFee = wantsConference ? 250000 : 0;
+      totalAmount = exhibitionFee + (conferenceFee * numberOfParticipants);
+    }
+
+    return { exhibitionFee, conferenceFee, totalAmount };
+  };
+
+  const { exhibitionFee, conferenceFee, totalAmount } = calculateFees();
   
   const getRegistrationTitle = () => {
     if (type === 'individual') {
@@ -74,7 +119,7 @@ const Payment = () => {
       return (
         <div className="space-y-4">
           <div className="flex justify-between items-center py-3 border-b border-border/50">
-            <span className="text-lg">Exhibition Pavilion + 7 Participants</span>
+            <span className="text-lg">Exhibition Pavilion + Conference Participation (7 participants)</span>
             <span className="text-lg font-semibold">₦{formatAmount(5500000)}</span>
           </div>
         </div>
@@ -86,8 +131,8 @@ const Payment = () => {
     
     if (wantsExhibition && exhibitionFee > 0) {
       let exhibitionLabel = 'Exhibition Booth';
-      if (type === 'government' && subtype === 'state') {
-        exhibitionLabel = 'Exhibition Pavilion';
+      if (type === 'government' && subtype === 'federal') {
+        exhibitionLabel = 'Exhibition Booth';
       }
       items.push(
         <div key="exhibition" className="flex justify-between items-center py-3 border-b border-border/50">
@@ -109,6 +154,18 @@ const Payment = () => {
       );
     }
 
+    // Special case for education sector (exhibition only)
+    if (type === 'organization' && sector === 'education' && exhibitionFee > 0) {
+      return (
+        <div className="space-y-4">
+          <div className="flex justify-between items-center py-3 border-b border-border/50">
+            <span className="text-lg">Exhibition Booth (Universities/Higher Institutions)</span>
+            <span className="text-lg font-semibold">₦{formatAmount(exhibitionFee)}</span>
+          </div>
+        </div>
+      );
+    }
+
     return <div className="space-y-4">{items}</div>;
   };
   
@@ -117,7 +174,13 @@ const Payment = () => {
       <div className="container mx-auto max-w-3xl">
         <div className="mb-8">
           <Link 
-            to="/registration/individual" 
+            to={
+              type === 'individual' ? '/registration/individual' :
+              type === 'organization' ? '/registration/organization' :
+              type === 'government' && subtype === 'state' ? '/registration/state-government' :
+              type === 'government' && subtype === 'federal' ? '/registration/federal-mda' :
+              '/registration'
+            }
             className="inline-flex items-center gap-2 text-primary hover:underline mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -141,11 +204,53 @@ const Payment = () => {
             <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-6 mb-8">
               <h3 className="text-xl font-semibold mb-4">{getRegistrationTitle()}</h3>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p>• Access to all conference sessions</p>
-                <p>• Networking opportunities with industry leaders</p>
-                <p>• Conference materials and digital resources</p>
-                <p>• Certificate of participation</p>
-                <p>• Welcome kit and refreshments</p>
+                {type === 'individual' && (
+                  <>
+                    <p>• Access to all conference sessions and workshops</p>
+                    <p>• Networking opportunities with industry leaders</p>
+                    <p>• Conference materials and digital resources</p>
+                    <p>• Certificate of participation</p>
+                    <p>• Welcome kit and refreshments</p>
+                  </>
+                )}
+                {type === 'government' && subtype === 'state' && (
+                  <>
+                    <p>• Premium exhibition pavilion space</p>
+                    <p>• Conference participation for up to 7 participants</p>
+                    <p>• Priority networking sessions</p>
+                    <p>• Dedicated support and coordination</p>
+                    <p>• Enhanced promotional opportunities</p>
+                  </>
+                )}
+                {type === 'organization' && sector === 'education' && (
+                  <>
+                    <p>• Exhibition booth for showcasing innovations</p>
+                    <p>• University/institutional branding opportunities</p>
+                    <p>• Student and faculty networking sessions</p>
+                    <p>• Academic collaboration platforms</p>
+                    <p>• Research presentation opportunities</p>
+                  </>
+                )}
+                {(type === 'organization' && (sector === 'professional-bodies' || sector === 'product-company')) && (
+                  <>
+                    {wantsExhibition && <p>• Exhibition booth for product/service showcase</p>}
+                    {wantsConference && <p>• Conference participation for selected participants</p>}
+                    <p>• Business networking and partnership opportunities</p>
+                    <p>• Industry-specific breakout sessions</p>
+                    <p>• Marketing and promotional benefits</p>
+                    <p>• Access to investor and buyer meetings</p>
+                  </>
+                )}
+                {type === 'government' && subtype === 'federal' && (
+                  <>
+                    {wantsExhibition && <p>• Government exhibition booth</p>}
+                    {wantsConference && <p>• Conference participation for selected staff</p>}
+                    <p>• Policy and strategy presentation opportunities</p>
+                    <p>• Inter-agency collaboration platforms</p>
+                    <p>• Public sector innovation showcase</p>
+                    <p>• Certificate of participation for all attendees</p>
+                  </>
+                )}
               </div>
             </div>
 
