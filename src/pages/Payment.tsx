@@ -1,11 +1,60 @@
+import { useAuth } from "@/hooks/useAuth";
+import { paystackService } from "@/lib/paystack";
+import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowLeft, CreditCard } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { 
+  CreditCard, 
+  ArrowLeft, 
+  CheckCircle, 
+  Clock, 
+  AlertCircle,
+  Phone,
+  Mail,
+  User,
+  Lock,
+  Loader2
+} from "lucide-react";
 import Footer from "@/components/Footer";
 
 const Payment = () => {
+  const { user, loading: authLoading } = useAuth();
   const [searchParams] = useSearchParams();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'success' | 'error'>('pending');
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!authLoading && !user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to complete your registration payment.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate, toast]);
+
+  // Load Paystack script on component mount
+  useEffect(() => {
+    if (user) {
+      paystackService.loadPaystackScript().catch(error => {
+        console.error('Failed to load Paystack:', error);
+        toast({
+          title: "Payment System Error",
+          description: "Failed to load payment system. Please refresh and try again.",
+          variant: "destructive"
+        });
+      });
+    }
+  }, [user, toast]);
   const type = searchParams.get('type') || 'individual';
   const sector = searchParams.get('sector') || '';
   const category = searchParams.get('category') || '';
@@ -15,8 +64,163 @@ const Payment = () => {
   const wantsExhibition = searchParams.get('wantsExhibition') === 'true';
   const wantsConference = searchParams.get('wantsConference') === 'true';
   const numberOfParticipants = parseInt(searchParams.get('numberOfParticipants') || '1');
-  
-  // Dynamic fee calculation based on registration type and options
+  const createRegistrationRecord = async () => {
+    if (!user) return null;
+
+    const registrationData = {
+      type,
+      sector,
+      category,
+      subtype,
+      wantsExhibition,
+      wantsConference,
+      numberOfParticipants,
+      searchParams: Object.fromEntries(searchParams.entries())
+    };
+
+    const { data, error } = await supabase
+      .from('registrations')
+      .insert({
+        user_id: user.id,
+        registration_type: type === 'government' ? `${type}-${subtype}` : type,
+        sector,
+        category,
+        accommodation: false,
+        exhibition: wantsExhibition,
+        dinner: false,
+        total_amount: totalAmount,
+        payment_status: 'pending',
+        registration_data: registrationData
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Registration creation error:', error);
+      throw new Error('Failed to create registration record');
+    }
+
+    return data;
+  };
+
+  const createPaymentRecord = async (registrationId: string, reference: string) => {
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from('payments')
+      .insert({
+        user_id: user.id,
+        registration_id: registrationId,
+        payment_reference: reference,
+        amount: totalAmount,
+        currency: 'NGN',
+        payment_method: 'paystack',
+        payment_status: 'pending',
+        paystack_reference: reference
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Payment creation error:', error);
+      throw new Error('Failed to create payment record');
+    }
+
+    return data;
+  };
+
+  const handlePayment = async () => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to complete payment.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+    setPaymentStatus('processing');
+
+    try {
+      // Create registration record first
+      const registration = await createRegistrationRecord();
+      if (!registration) {
+        throw new Error('Failed to create registration');
+      }
+
+      // Get Paystack public key and initialize payment
+      const publicKey = await paystackService.getPublicKey();
+      const reference = `STI_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      
+      // Create payment record
+      await createPaymentRecord(registration.id, reference);
+
+      // Initialize Paystack payment
+      const handler = (window as any).PaystackPop.setup({
+        key: publicKey,
+        email: user.email || '',
+        amount: totalAmount * 100, // Convert to kobo
+        currency: 'NGN',
+        ref: reference,
+        metadata: {
+          registration_id: registration.id,
+          user_id: user.id,
+          registration_type: type
+        },
+        callback: async (response: any) => {
+          if (response.status === 'success') {
+            try {
+              // Verify payment on backend
+              await paystackService.verifyPayment(response.reference);
+              
+              setPaymentStatus('success');
+              toast({
+                title: "Payment Successful!",
+                description: "Your registration has been completed. Redirecting to your dashboard..."
+              });
+
+              // Redirect to dashboard after a short delay
+              setTimeout(() => {
+                navigate('/dashboard');
+              }, 2000);
+
+            } catch (error) {
+              console.error('Payment verification error:', error);
+              setPaymentStatus('error');
+              toast({
+                title: "Payment Verification Failed",
+                description: "Please contact support for assistance.",
+                variant: "destructive"
+              });
+            }
+          }
+        },
+        onClose: () => {
+          setPaymentStatus('pending');
+          setIsProcessing(false);
+          toast({
+            title: "Payment Cancelled",
+            description: "Your payment was cancelled. You can try again anytime.",
+            variant: "destructive"
+          });
+        }
+      });
+
+      handler.openIframe();
+
+    } catch (error) {
+      console.error('Payment initiation error:', error);
+      setPaymentStatus('error');
+      setIsProcessing(false);
+      
+      toast({
+        title: "Payment Error",
+        description: error instanceof Error ? error.message : "Failed to initialize payment. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
   const calculateFees = () => {
     let exhibitionFee = 0;
     let conferenceFee = 0;
@@ -63,6 +267,18 @@ const Payment = () => {
   };
 
   const { exhibitionFee, conferenceFee, totalAmount } = calculateFees();
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect to auth page
+  }
   
   const getRegistrationTitle = () => {
     if (type === 'individual') {
@@ -275,16 +491,43 @@ const Payment = () => {
 
             {/* Payment Button */}
             <div className="text-center">
-              <Button 
-                size="lg"
-                className="w-full max-w-md bg-gradient-to-r from-primary to-primary/80 text-primary-foreground hover:from-primary/90 hover:to-primary/70 text-lg py-6 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                Proceed to Payment
-              </Button>
-              
-              <p className="text-sm text-muted-foreground mt-4">
-                Secure payment processing • Your information is protected
-              </p>
+              {paymentStatus === 'success' ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-center text-green-600 mb-4">
+                    <CheckCircle className="h-8 w-8 mr-2" />
+                    <span className="text-lg font-semibold">Payment Successful!</span>
+                  </div>
+                  <p className="text-muted-foreground">
+                    Redirecting to your dashboard...
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <Button 
+                    size="lg"
+                    onClick={handlePayment}
+                    disabled={isProcessing || paymentStatus === 'processing'}
+                    className="w-full max-w-md bg-gradient-to-r from-primary to-primary/80 text-primary-foreground hover:from-primary/90 hover:to-primary/70 text-lg py-6 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    {isProcessing ? (
+                      <>
+                        <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                        Processing Payment...
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="h-5 w-5 mr-2" />
+                        Pay ₦{formatAmount(totalAmount)} Securely
+                      </>
+                    )}
+                  </Button>
+                  
+                  <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
+                    <Lock className="h-4 w-4" />
+                    <span>Secured by Paystack • SSL Encrypted</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Contact Support */}
