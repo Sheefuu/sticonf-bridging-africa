@@ -74,7 +74,7 @@ const Footer = () => {
           
           <div className="border-t border-blue-400/30 mt-8 pt-8 text-center">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-blue-100 text-sm">© 2025 STIConf. All rights reserved.</p>
+              <p className="text-blue-100 text-sm">© 2009-2025. All rights reserved.</p>
               <div className="flex gap-6 text-sm text-blue-100">
               </div>
             </div>
