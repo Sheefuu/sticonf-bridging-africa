@@ -184,7 +184,7 @@ const Contact = () => {
                 <p className="text-muted-foreground mb-4">
                   For general questions about the conference
                 </p>
-                <Button variant="outline" onClick={() => window.open('mailto:sticonfinternational@gmail.com?subject=Conference Inquiry', '_blank')}>
+                <Button variant="outline" onClick={() => window.location.href = 'mailto:sticonfinternational@gmail.com?subject=Conference Inquiry'}>
                   Send Email
                 </Button>
               </CardContent>
