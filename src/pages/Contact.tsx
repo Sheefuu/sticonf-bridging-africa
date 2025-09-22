@@ -3,10 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Phone, Mail, MapPin, Globe, Clock } from "lucide-react";
 import Footer from "@/components/Footer";
+import { useState } from "react";
 
 const Contact = () => {
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [showSponsorshipModal, setShowSponsorshipModal] = useState(false);
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -180,7 +184,7 @@ const Contact = () => {
                 <p className="text-muted-foreground mb-4">
                   For general questions about the conference
                 </p>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => window.open('mailto:sticonfinternational@gmail.com?subject=Conference Inquiry', '_blank')}>
                   Send Email
                 </Button>
               </CardContent>
@@ -195,9 +199,26 @@ const Contact = () => {
                 <p className="text-muted-foreground mb-4">
                   Need help with registration process?
                 </p>
-                <Button variant="outline">
-                  Call Now
-                </Button>
+                <Dialog open={showRegistrationModal} onOpenChange={setShowRegistrationModal}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                      Call Now
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Registration Support</DialogTitle>
+                    </DialogHeader>
+                    <div className="text-center py-6">
+                      <Phone className="h-12 w-12 text-accent mx-auto mb-4" />
+                      <h3 className="text-2xl font-semibold mb-2">Call Us Now</h3>
+                      <p className="text-lg text-primary font-mono">+234 80 964 308 59</p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Available Monday - Friday: 9:00 AM - 5:00 PM (WAT)
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
 
@@ -210,9 +231,26 @@ const Contact = () => {
                 <p className="text-muted-foreground mb-4">
                   Interested in sponsorship opportunities?
                 </p>
-                <Button variant="outline">
-                  Learn More
-                </Button>
+                <Dialog open={showSponsorshipModal} onOpenChange={setShowSponsorshipModal}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">
+                      Learn More
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Sponsorship Opportunities</DialogTitle>
+                    </DialogHeader>
+                    <div className="text-center py-6">
+                      <Globe className="h-12 w-12 text-primary mx-auto mb-4" />
+                      <h3 className="text-2xl font-semibold mb-2">Contact Us</h3>
+                      <p className="text-lg text-primary font-mono">+234 80 964 308 59</p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Speak with our sponsorship team about partnership opportunities
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
           </div>
