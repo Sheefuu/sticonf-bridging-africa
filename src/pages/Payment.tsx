@@ -141,12 +141,12 @@ const Payment = () => {
 
     setIsProcessing(true);
     setPaymentStatus('processing');
+    let paymentCancelled = false;
 
     try {
       console.log('Starting payment process...');
       
       // Step 1: Load Paystack script
-      console.log('Loading Paystack script...');
       await paystackService.loadPaystackScript();
       console.log('Paystack script loaded successfully');
       
@@ -158,98 +158,58 @@ const Payment = () => {
       }
       console.log('Registration created:', registration.id);
       
-      // Step 3: Get public key and test connection
-      console.log('Getting Paystack public key...');
-      const publicKey = await paystackService.getPublicKey();
-      console.log('Public key retrieved, length:', publicKey.length);
-      
-      // Step 4: Check if PaystackPop is available
-      if (!window.PaystackPop) {
-        throw new Error('Paystack script not properly loaded');
-      }
-      console.log('PaystackPop is available');
-      
-      // Step 5: Generate reference and create payment record
+      // Step 3: Create payment record with generated reference
       const reference = `STI_${Date.now()}_${Math.random().toString(36).substring(7)}`;
       console.log('Generated payment reference:', reference);
       
       await createPaymentRecord(registration.id, reference);
       console.log('Payment record created');
       
-      // Step 6: Initialize Paystack payment
-      console.log('Initializing Paystack payment modal...');
-      const handler = window.PaystackPop.setup({
-        key: publicKey,
+      // Step 4: Initialize payment using PaystackService
+      console.log('Initializing payment with PaystackService...');
+      const paymentReference = await paystackService.initializePayment({
         email: user.email || '',
-        amount: totalAmount * 100, // Convert to kobo
-        currency: 'NGN',
-        ref: reference,
+        amount: totalAmount,
+        registrationId: registration.id,
         metadata: {
-          registration_id: registration.id,
           user_id: user.id,
           registration_type: type
-        },
-        callback: async (response: any) => {
-          console.log('Payment callback received:', response);
-          if (response.status === 'success') {
-            try {
-              console.log('Verifying payment...');
-              const verificationResult = await paystackService.verifyPayment(response.reference);
-              console.log('Verification result:', verificationResult);
-              
-              if (verificationResult.status) {
-                setPaymentStatus('success');
-                toast({
-                  title: "Payment Successful!",
-                  description: "Your registration has been completed. Redirecting to your dashboard..."
-                });
-                setTimeout(() => navigate('/dashboard'), 2000);
-              } else {
-                throw new Error('Payment verification failed');
-              }
-            } catch (error) {
-              console.error('Payment verification error:', error);
-              setPaymentStatus('error');
-              toast({
-                title: "Payment Verification Failed",
-                description: "Please contact support for assistance.",
-                variant: "destructive"
-              });
-            }
-          } else {
-            console.error('Payment failed:', response);
-            setPaymentStatus('error');
-            toast({
-              title: "Payment Failed",
-              description: "Payment was not successful. Please try again.",
-              variant: "destructive"
-            });
-          }
-          setIsProcessing(false);
-        },
-        onClose: () => {
-          console.log('Payment modal closed');
-          setPaymentStatus('pending');
-          setIsProcessing(false);
-          toast({
-            title: "Payment Cancelled",
-            description: "Your payment was cancelled. You can try again anytime.",
-            variant: "destructive"
-          });
         }
       });
-
-      console.log('Opening Paystack payment modal...');
-      handler.openIframe();
+      
+      console.log('Payment completed successfully with reference:', paymentReference);
+      
+      // Step 5: Verify payment
+      console.log('Verifying payment...');
+      const verificationResult = await paystackService.verifyPayment(paymentReference);
+      console.log('Verification result:', verificationResult);
+      
+      if (verificationResult.status) {
+        setPaymentStatus('success');
+        toast({
+          title: "Payment Successful!",
+          description: "Your registration has been completed. Redirecting to your dashboard..."
+        });
+        setTimeout(() => navigate('/dashboard'), 2000);
+      } else {
+        throw new Error('Payment verification failed');
+      }
 
     } catch (error: any) {
-      console.error('Payment initiation error:', error);
+      console.error('Payment error:', error);
       setPaymentStatus('error');
-      setIsProcessing(false);
+      
+      // Check if payment was cancelled
+      if (error.message.includes('cancelled')) {
+        paymentCancelled = true;
+        setPaymentStatus('pending');
+      }
       
       // More specific error messages
       let errorMessage = 'Failed to initialize payment. Please try again.';
-      if (error.message.includes('authentication')) {
+      if (error.message.includes('cancelled')) {
+        errorMessage = 'Payment was cancelled. You can try again anytime.';
+      } else if (error.message.includes('authentication')) {
         errorMessage = 'Authentication failed. Please sign in again.';
       } else if (error.message.includes('public key')) {
         errorMessage = 'Payment system configuration error. Please contact support.';
@@ -258,10 +218,12 @@ const Payment = () => {
       }
       
       toast({
-        title: "Payment Error",
+        title: error.message.includes('cancelled') ? "Payment Cancelled" : "Payment Error",
         description: errorMessage,
-        variant: "destructive"
+        variant: error.message.includes('cancelled') ? "default" : "destructive"
       });
+    } finally {
+      setIsProcessing(false);
     }
   };
   const calculateFees = () => {
