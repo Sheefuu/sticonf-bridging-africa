@@ -1,13 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import conference1 from "@/assets/conference1.jpg";
 import conference2 from "@/assets/conference2.jpg";
 import conference3 from "@/assets/conference3.jpg";
 import conference4 from "@/assets/conference4.jpg";
 
 const images = [
-  conference1,
   conference2, 
   conference3,
   conference4
