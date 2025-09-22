@@ -2,9 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Crown, Award, Gem } from "lucide-react";
+import { useState } from "react";
 import Footer from "@/components/Footer";
+import ContactModal from "@/components/ContactModal";
 
 const Sponsorship = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  
   const sponsorshipPackages = [
     {
       name: "Exclusive Partner",
@@ -142,7 +146,10 @@ const Sponsorship = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button className="w-full mt-6">
+                    <Button 
+                      className="w-full mt-6"
+                      onClick={() => setIsContactModalOpen(true)}
+                    >
                       Contact Us
                     </Button>
                   </CardContent>
@@ -165,7 +172,11 @@ const Sponsorship = () => {
                       <Badge variant="outline" className="mb-3">{option.location}</Badge>
                     )}
                     <div className="text-2xl font-bold text-primary mb-4">{option.price}</div>
-                    <Button variant="outline" className="w-full">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => setIsContactModalOpen(true)}
+                    >
                       Learn More
                     </Button>
                   </div>
@@ -276,6 +287,11 @@ const Sponsorship = () => {
           </Card>
         </section>
       </div>
+      
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
       
       <Footer />
     </div>

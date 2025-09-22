@@ -1,15 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, MapPin, Users } from "lucide-react";
+import { useState } from "react";
+import ContactModal from "./ContactModal";
+import heroImage from "@/assets/hero-conference.jpg";
 
 const Hero = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <section id="home" className="min-h-screen bg-gradient-hero flex items-center text-white">
       <div className="container mx-auto px-4 py-20">
         <div className="text-center max-w-6xl mx-auto">
-          {/* Conference Image Placeholder */}
-          <div className="mb-12 mx-auto w-full max-w-4xl h-64 bg-black/20 rounded-lg flex items-center justify-center mb-8">
-            <div className="text-white/60 text-lg">Conference Image</div>
+          {/* Conference Image */}
+          <div className="mb-12 mx-auto w-full max-w-4xl h-64 rounded-lg overflow-hidden">
+            <img 
+              src={heroImage} 
+              alt="STIConf International Conference on Science, Technology & Innovation" 
+              className="w-full h-full object-cover"
+            />
           </div>
           
           {/* Main Title */}
@@ -57,8 +66,12 @@ const Hero = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-3 text-lg">
-              Register Now
+            <Button 
+              size="lg" 
+              className="bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-3 text-lg"
+              onClick={() => setIsContactModalOpen(true)}
+            >
+              Contact Us
             </Button>
             <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 text-lg">
               View Program
@@ -66,6 +79,11 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </section>
   );
 };
