@@ -39,10 +39,10 @@ const Contact = () => {
                         +234 809 643 0859
                       </a>
                       <a 
-                        href="tel:+2348036500822" 
+                        href="tel:+2348096430859" 
                         className="block text-muted-foreground hover:text-primary transition-colors"
                       >
-                        +234 803 650 0822
+                        +234 8096430859
                       </a>
                     </div>
                   </div>
