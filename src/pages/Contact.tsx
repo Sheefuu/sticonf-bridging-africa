@@ -39,16 +39,16 @@ const Contact = () => {
                         +234 809 643 0859
                       </a>
                       <a 
-                        href="tel:+2348096430859" 
+                        href="tel:+2348036500822" 
                         className="block text-muted-foreground hover:text-primary transition-colors"
                       >
-                        +234 8096430859
+                        +234 803 650 0822
                       </a>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                {/* <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
                     <Globe className="h-6 w-6 text-accent" />
                   </div>
@@ -63,7 +63,7 @@ const Contact = () => {
                       www.sticonf.com
                     </a>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -73,7 +73,7 @@ const Contact = () => {
                     <h4 className="font-semibold mb-2">Conference Venue</h4>
                     <p className="text-muted-foreground">
                       Abuja, Nigeria<br />
-                      March 15-17, 2025
+                      March 15-17, 2026
                     </p>
                   </div>
                 </div>
