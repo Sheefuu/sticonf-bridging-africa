@@ -62,7 +62,7 @@ const Sponsorship = () => {
     },
     {
       name: "Silver Sponsor",
-      price: "₦25,000,000",
+      price: "₦25,500,000",
       icon: Star,
       color: "text-gray-500",
       bgColor: "bg-gray-50",
@@ -77,7 +77,7 @@ const Sponsorship = () => {
     },
     {
       name: "Bronze Sponsor",
-      price: "₦15,500,000",
+      price: "₦25,000,000",
       icon: Award,
       color: "text-orange-600",
       bgColor: "bg-orange-50",
