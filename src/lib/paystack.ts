@@ -43,39 +43,53 @@ export class PaystackService {
   }
 
   async initializePayment(paymentData: PaystackPaymentData): Promise<string> {
-    const publicKey = await this.getPublicKey();
-    const reference = `STI_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    try {
+      const publicKey = await this.getPublicKey();
+      const reference = `STI_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 
-    return new Promise((resolve, reject) => {
-      if (!window.PaystackPop) {
-        reject(new Error('Paystack script not loaded'));
-        return;
-      }
+      return new Promise((resolve, reject) => {
+        if (!window.PaystackPop) {
+          reject(new Error('Paystack script not loaded'));
+          return;
+        }
 
-      const handler = window.PaystackPop.setup({
-        key: publicKey,
-        email: paymentData.email,
-        amount: paymentData.amount * 100, // Convert to kobo
-        currency: 'NGN',
-        ref: reference,
-        metadata: {
-          registration_id: paymentData.registrationId,
-          ...paymentData.metadata,
-        },
-        callback: (response: any) => {
-          if (response.status === 'success') {
-            resolve(response.reference);
-          } else {
-            reject(new Error('Payment failed'));
-          }
-        },
-        onClose: () => {
-          reject(new Error('Payment cancelled'));
-        },
+        console.log('Initializing Paystack payment with:', {
+          key: publicKey,
+          email: paymentData.email,
+          amount: paymentData.amount * 100,
+          reference
+        });
+
+        const handler = window.PaystackPop.setup({
+          key: publicKey,
+          email: paymentData.email,
+          amount: paymentData.amount * 100, // Convert to kobo
+          currency: 'NGN',
+          ref: reference,
+          metadata: {
+            registration_id: paymentData.registrationId,
+            ...paymentData.metadata,
+          },
+          callback: (response: any) => {
+            console.log('Payment callback response:', response);
+            if (response.status === 'success') {
+              resolve(response.reference);
+            } else {
+              reject(new Error('Payment failed'));
+            }
+          },
+          onClose: () => {
+            console.log('Payment modal closed');
+            reject(new Error('Payment cancelled'));
+          },
+        });
+
+        handler.openIframe();
       });
-
-      handler.openIframe();
-    });
+    } catch (error) {
+      console.error('Error initializing payment:', error);
+      throw error;
+    }
   }
 
   async verifyPayment(reference: string): Promise<PaystackResponse> {

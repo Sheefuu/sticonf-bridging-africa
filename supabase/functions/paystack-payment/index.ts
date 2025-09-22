@@ -33,7 +33,9 @@ serve(async (req) => {
       throw new Error('Invalid authentication')
     }
 
-    const { action } = await req.json()
+    // Parse request body once
+    const requestBody = await req.json()
+    const { action } = requestBody
 
     if (action === 'get-public-key') {
       // Return Paystack public key
@@ -52,7 +54,7 @@ serve(async (req) => {
     }
 
     if (action === 'verify-payment') {
-      const { reference } = await req.json()
+      const { reference } = requestBody
       
       if (!reference) {
         throw new Error('Payment reference is required')

@@ -143,80 +143,59 @@ const Payment = () => {
     setPaymentStatus('processing');
 
     try {
+      console.log('Starting payment process...');
+      
+      // Load Paystack script
+      await paystackService.loadPaystackScript();
+      console.log('Paystack script loaded');
+      
       // Create registration record first
       const registration = await createRegistrationRecord();
       if (!registration) {
         throw new Error('Failed to create registration');
       }
-
-      // Get Paystack public key and initialize payment
-      const publicKey = await paystackService.getPublicKey();
-      const reference = `STI_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      console.log('Registration created:', registration.id);
       
-      // Create payment record
-      await createPaymentRecord(registration.id, reference);
-
-      // Initialize Paystack payment
-      const handler = (window as any).PaystackPop.setup({
-        key: publicKey,
-        email: user.email || '',
-        amount: totalAmount * 100, // Convert to kobo
-        currency: 'NGN',
-        ref: reference,
+      // Initialize payment with Paystack
+      const paymentReference = await paystackService.initializePayment({
+        email: user.email!,
+        amount: totalAmount,
+        registrationId: registration.id,
         metadata: {
-          registration_id: registration.id,
           user_id: user.id,
-          registration_type: type
-        },
-        callback: async (response: any) => {
-          if (response.status === 'success') {
-            try {
-              // Verify payment on backend
-              await paystackService.verifyPayment(response.reference);
-              
-              setPaymentStatus('success');
-              toast({
-                title: "Payment Successful!",
-                description: "Your registration has been completed. Redirecting to your dashboard..."
-              });
-
-              // Redirect to dashboard after a short delay
-              setTimeout(() => {
-                navigate('/dashboard');
-              }, 2000);
-
-            } catch (error) {
-              console.error('Payment verification error:', error);
-              setPaymentStatus('error');
-              toast({
-                title: "Payment Verification Failed",
-                description: "Please contact support for assistance.",
-                variant: "destructive"
-              });
-            }
-          }
-        },
-        onClose: () => {
-          setPaymentStatus('pending');
-          setIsProcessing(false);
-          toast({
-            title: "Payment Cancelled",
-            description: "Your payment was cancelled. You can try again anytime.",
-            variant: "destructive"
-          });
+          registration_type: type,
+          sector: sector
         }
       });
-
-      handler.openIframe();
-
-    } catch (error) {
-      console.error('Payment initiation error:', error);
+      
+      console.log('Payment successful, reference:', paymentReference);
+      
+      // Create payment record after successful payment initialization
+      await createPaymentRecord(registration.id, paymentReference);
+      
+      // Verify payment
+      const verificationResult = await paystackService.verifyPayment(paymentReference);
+      console.log('Verification result:', verificationResult);
+      
+      if (verificationResult.status) {
+        setPaymentStatus('success');
+        toast({
+          title: "Payment Successful!",
+          description: "Your registration has been completed. Redirecting to your dashboard..."
+        });
+        setTimeout(() => navigate('/dashboard'), 2000);
+      } else {
+        throw new Error('Payment verification failed');
+      }
+      
+    } catch (error: any) {
+      console.error('Payment error:', error);
       setPaymentStatus('error');
       setIsProcessing(false);
       
       toast({
         title: "Payment Error",
-        description: error instanceof Error ? error.message : "Failed to initialize payment. Please try again.",
+        description: error.message || 'Payment failed. Please try again.',
         variant: "destructive"
       });
     }
