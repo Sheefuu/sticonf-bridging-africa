@@ -48,7 +48,6 @@ const Footer = () => {
                 <li><a href="/schedule" className="hover:text-white transition-colors">Schedule</a></li>
                 <li><a href="/sponsorship" className="hover:text-white transition-colors">Registration</a></li>
                 <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Call for Papers</a></li>
                 <li><a href="/sponsorship" className="hover:text-white transition-colors">Sponsorship</a></li>
               </ul>
             </div>
@@ -77,9 +76,6 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-blue-100 text-sm">© 2025 STIConf. All rights reserved.</p>
               <div className="flex gap-6 text-sm text-blue-100">
-                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-white transition-colors">Code of Conduct</a>
               </div>
             </div>
             <div className="mt-4 text-center">
