@@ -45,9 +45,19 @@ const Contact = () => {
 
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Globe className="h-6 w-6 text-accent" />
+                    {/* <Globe className="h-6 w-6 text-accent" />
                   </div>
-                
+                  <div>
+                    <h4 className="font-semibold mb-2">Website</h4>
+                    <a 
+                      href="http://www.sticonf.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      www.sticonf.com
+                    </a>
+                  </div> */}
                 </div>
 
                 <div className="flex items-start gap-4">
