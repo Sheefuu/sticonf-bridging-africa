@@ -8,11 +8,77 @@ import { Phone, Mail, MapPin, Globe, Clock } from "lucide-react";
 import Footer from "@/components/Footer";
 import ContactFormModal from "@/components/ContactFormModal";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showSponsorshipModal, setShowSponsorshipModal] = useState(false);
   const [showContactFormModal, setShowContactFormModal] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    organization: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          subject: formData.subject,
+          message: `Phone: ${formData.phone}\nOrganization: ${formData.organization}\n\nMessage:\n${formData.message}`
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Email sent successfully:', data);
+      
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        organization: "",
+        subject: "",
+        message: "",
+      });
+
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+    } catch (error: any) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -122,50 +188,106 @@ const Contact = () => {
                 </p>
               </CardHeader>
               <CardContent>
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name *</Label>
-                      <Input id="firstName" placeholder="Enter your first name" required />
+                      <Input 
+                        id="firstName" 
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your first name" 
+                        required 
+                        disabled={isSubmitting}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name *</Label>
-                      <Input id="lastName" placeholder="Enter your last name" required />
+                      <Input 
+                        id="lastName" 
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your last name" 
+                        required 
+                        disabled={isSubmitting}
+                      />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email">Email Address *</Label>
-                    <Input id="email" type="email" placeholder="Enter your email address" required />
+                    <Input 
+                      id="email" 
+                      name="email"
+                      type="email" 
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="Enter your email address" 
+                      required 
+                      disabled={isSubmitting}
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="Enter your phone number" />
+                    <Input 
+                      id="phone" 
+                      name="phone"
+                      type="tel" 
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="Enter your phone number" 
+                      disabled={isSubmitting}
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="organization">Organization/Company</Label>
-                    <Input id="organization" placeholder="Enter your organization or company name" />
+                    <Input 
+                      id="organization" 
+                      name="organization"
+                      value={formData.organization}
+                      onChange={handleInputChange}
+                      placeholder="Enter your organization or company name" 
+                      disabled={isSubmitting}
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject *</Label>
-                    <Input id="subject" placeholder="What is this regarding?" required />
+                    <Input 
+                      id="subject" 
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="What is this regarding?" 
+                      required 
+                      disabled={isSubmitting}
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
                     <Textarea 
                       id="message" 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       placeholder="Tell us more about your inquiry..."
                       rows={6}
                       required 
+                      disabled={isSubmitting}
                     />
                   </div>
 
-                  <Button type="submit" className="w-full text-lg py-3">
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    className="w-full text-lg py-3"
+                    disabled={isSubmitting || !formData.firstName || !formData.lastName || !formData.email || !formData.subject || !formData.message}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
