@@ -14,13 +14,205 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          paid_at: string | null
+          payment_data: Json | null
+          payment_method: string
+          payment_reference: string
+          payment_status: string
+          paystack_reference: string | null
+          registration_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          payment_data?: Json | null
+          payment_method?: string
+          payment_reference: string
+          payment_status?: string
+          paystack_reference?: string | null
+          registration_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          payment_data?: Json | null
+          payment_method?: string
+          payment_reference?: string
+          payment_status?: string
+          paystack_reference?: string | null
+          registration_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          country: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          job_title: string | null
+          organization: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          job_title?: string | null
+          organization?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          job_title?: string | null
+          organization?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      registrations: {
+        Row: {
+          accommodation: boolean | null
+          category: string | null
+          created_at: string
+          dinner: boolean | null
+          exhibition: boolean | null
+          id: string
+          payment_reference: string | null
+          payment_status: string
+          registration_data: Json | null
+          registration_type: string
+          sector: string | null
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accommodation?: boolean | null
+          category?: string | null
+          created_at?: string
+          dinner?: boolean | null
+          exhibition?: boolean | null
+          id?: string
+          payment_reference?: string | null
+          payment_status?: string
+          registration_data?: Json | null
+          registration_type: string
+          sector?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accommodation?: boolean | null
+          category?: string | null
+          created_at?: string
+          dinner?: boolean | null
+          exhibition?: boolean | null
+          id?: string
+          payment_reference?: string | null
+          payment_status?: string
+          registration_data?: Json | null
+          registration_type?: string
+          sector?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tickets: {
+        Row: {
+          created_at: string
+          id: string
+          qr_code: string | null
+          registration_id: string
+          status: string
+          ticket_number: string
+          ticket_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          qr_code?: string | null
+          registration_id: string
+          status?: string
+          ticket_number: string
+          ticket_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          qr_code?: string | null
+          registration_id?: string
+          status?: string
+          ticket_number?: string
+          ticket_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_ticket_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
