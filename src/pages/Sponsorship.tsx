@@ -62,7 +62,7 @@ const Sponsorship = () => {
     },
     {
       name: "Silver Sponsor",
-      price: "₦25,500,000",
+      price: "₦20,000,000",
       icon: Star,
       color: "text-gray-500",
       bgColor: "bg-gray-50",
@@ -77,7 +77,7 @@ const Sponsorship = () => {
     },
     {
       name: "Bronze Sponsor",
-      price: "₦25,000,000",
+      price: "₦15,500,000",
       icon: Award,
       color: "text-orange-600",
       bgColor: "bg-orange-50",
@@ -242,15 +242,15 @@ const Sponsorship = () => {
                     >
                       +234 809 643 0859
                     </a>
-                    <a 
+                    {/* <a 
                       href="tel:+2348036500822" 
                       className="text-primary hover:underline font-medium"
                     >
                       +234 803 650 0822
-                    </a>
+                    </a> */}
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <a 
                     href="http://www.sticonf.com" 
                     target="_blank" 
@@ -259,7 +259,7 @@ const Sponsorship = () => {
                   >
                     www.sticonf.com
                   </a>
-                </div>
+                </div> */}
               </div>
               <div className="bg-muted/30 rounded-lg p-6">
                 <p className="text-sm text-muted-foreground mb-2">
