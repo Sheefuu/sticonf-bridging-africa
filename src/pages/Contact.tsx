@@ -6,11 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Phone, Mail, MapPin, Globe, Clock } from "lucide-react";
 import Footer from "@/components/Footer";
+import ContactFormModal from "@/components/ContactFormModal";
 import { useState } from "react";
 
 const Contact = () => {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showSponsorshipModal, setShowSponsorshipModal] = useState(false);
+  const [showContactFormModal, setShowContactFormModal] = useState(false);
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
@@ -184,7 +186,7 @@ const Contact = () => {
                 <p className="text-muted-foreground mb-4">
                   For general questions about the conference
                 </p>
-                <Button variant="outline" onClick={() => window.location.href = 'mailto:sticonfinternational@gmail.com?subject=Conference Inquiry'}>
+                <Button variant="outline" onClick={() => setShowContactFormModal(true)}>
                   Send Email
                 </Button>
               </CardContent>
@@ -256,6 +258,11 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      
+      <ContactFormModal 
+        open={showContactFormModal} 
+        onOpenChange={setShowContactFormModal} 
+      />
       
       <Footer />
     </div>
