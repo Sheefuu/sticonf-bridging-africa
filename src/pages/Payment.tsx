@@ -145,57 +145,121 @@ const Payment = () => {
     try {
       console.log('Starting payment process...');
       
-      // Load Paystack script
+      // Step 1: Load Paystack script
+      console.log('Loading Paystack script...');
       await paystackService.loadPaystackScript();
-      console.log('Paystack script loaded');
+      console.log('Paystack script loaded successfully');
       
-      // Create registration record first
+      // Step 2: Create registration record first
+      console.log('Creating registration record...');
       const registration = await createRegistrationRecord();
       if (!registration) {
         throw new Error('Failed to create registration');
       }
       console.log('Registration created:', registration.id);
       
-      // Initialize payment with Paystack
-      const paymentReference = await paystackService.initializePayment({
-        email: user.email!,
-        amount: totalAmount,
-        registrationId: registration.id,
+      // Step 3: Get public key and test connection
+      console.log('Getting Paystack public key...');
+      const publicKey = await paystackService.getPublicKey();
+      console.log('Public key retrieved, length:', publicKey.length);
+      
+      // Step 4: Check if PaystackPop is available
+      if (!window.PaystackPop) {
+        throw new Error('Paystack script not properly loaded');
+      }
+      console.log('PaystackPop is available');
+      
+      // Step 5: Generate reference and create payment record
+      const reference = `STI_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      console.log('Generated payment reference:', reference);
+      
+      await createPaymentRecord(registration.id, reference);
+      console.log('Payment record created');
+      
+      // Step 6: Initialize Paystack payment
+      console.log('Initializing Paystack payment modal...');
+      const handler = window.PaystackPop.setup({
+        key: publicKey,
+        email: user.email || '',
+        amount: totalAmount * 100, // Convert to kobo
+        currency: 'NGN',
+        ref: reference,
         metadata: {
+          registration_id: registration.id,
           user_id: user.id,
-          registration_type: type,
-          sector: sector
+          registration_type: type
+        },
+        callback: async (response: any) => {
+          console.log('Payment callback received:', response);
+          if (response.status === 'success') {
+            try {
+              console.log('Verifying payment...');
+              const verificationResult = await paystackService.verifyPayment(response.reference);
+              console.log('Verification result:', verificationResult);
+              
+              if (verificationResult.status) {
+                setPaymentStatus('success');
+                toast({
+                  title: "Payment Successful!",
+                  description: "Your registration has been completed. Redirecting to your dashboard..."
+                });
+                setTimeout(() => navigate('/dashboard'), 2000);
+              } else {
+                throw new Error('Payment verification failed');
+              }
+            } catch (error) {
+              console.error('Payment verification error:', error);
+              setPaymentStatus('error');
+              toast({
+                title: "Payment Verification Failed",
+                description: "Please contact support for assistance.",
+                variant: "destructive"
+              });
+            }
+          } else {
+            console.error('Payment failed:', response);
+            setPaymentStatus('error');
+            toast({
+              title: "Payment Failed",
+              description: "Payment was not successful. Please try again.",
+              variant: "destructive"
+            });
+          }
+          setIsProcessing(false);
+        },
+        onClose: () => {
+          console.log('Payment modal closed');
+          setPaymentStatus('pending');
+          setIsProcessing(false);
+          toast({
+            title: "Payment Cancelled",
+            description: "Your payment was cancelled. You can try again anytime.",
+            variant: "destructive"
+          });
         }
       });
-      
-      console.log('Payment successful, reference:', paymentReference);
-      
-      // Create payment record after successful payment initialization
-      await createPaymentRecord(registration.id, paymentReference);
-      
-      // Verify payment
-      const verificationResult = await paystackService.verifyPayment(paymentReference);
-      console.log('Verification result:', verificationResult);
-      
-      if (verificationResult.status) {
-        setPaymentStatus('success');
-        toast({
-          title: "Payment Successful!",
-          description: "Your registration has been completed. Redirecting to your dashboard..."
-        });
-        setTimeout(() => navigate('/dashboard'), 2000);
-      } else {
-        throw new Error('Payment verification failed');
-      }
-      
+
+      console.log('Opening Paystack payment modal...');
+      handler.openIframe();
+
     } catch (error: any) {
-      console.error('Payment error:', error);
+      console.error('Payment initiation error:', error);
       setPaymentStatus('error');
       setIsProcessing(false);
       
+      // More specific error messages
+      let errorMessage = 'Failed to initialize payment. Please try again.';
+      if (error.message.includes('authentication')) {
+        errorMessage = 'Authentication failed. Please sign in again.';
+      } else if (error.message.includes('public key')) {
+        errorMessage = 'Payment system configuration error. Please contact support.';
+      } else if (error.message.includes('script')) {
+        errorMessage = 'Payment system failed to load. Please refresh and try again.';
+      }
+      
       toast({
         title: "Payment Error",
-        description: error.message || 'Payment failed. Please try again.',
+        description: errorMessage,
         variant: "destructive"
       });
     }

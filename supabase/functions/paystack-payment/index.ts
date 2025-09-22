@@ -21,6 +21,7 @@ serve(async (req) => {
     // Get the authorization header from the request
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) {
+      console.error('No authorization header provided')
       throw new Error('No authorization header')
     }
 
@@ -30,20 +31,28 @@ serve(async (req) => {
     )
 
     if (authError || !user) {
+      console.error('Authentication failed:', authError)
       throw new Error('Invalid authentication')
     }
+
+    console.log('User authenticated:', user.id)
 
     // Parse request body once
     const requestBody = await req.json()
     const { action } = requestBody
+    
+    console.log('Action requested:', action)
 
     if (action === 'get-public-key') {
       // Return Paystack public key
       const publicKey = Deno.env.get('PAYSTACK_PUBLIC_KEY')
       
       if (!publicKey) {
+        console.error('Paystack public key not configured in environment')
         throw new Error('Paystack public key not configured')
       }
+
+      console.log('Returning public key (length):', publicKey.length)
 
       return new Response(
         JSON.stringify({ publicKey }),
@@ -57,12 +66,16 @@ serve(async (req) => {
       const { reference } = requestBody
       
       if (!reference) {
+        console.error('No payment reference provided')
         throw new Error('Payment reference is required')
       }
+
+      console.log('Verifying payment with reference:', reference)
 
       // Verify payment with Paystack
       const paystackSecretKey = Deno.env.get('PAYSTACK_SECRET_KEY')
       if (!paystackSecretKey) {
+        console.error('Paystack secret key not configured')
         throw new Error('Paystack secret key not configured')
       }
 

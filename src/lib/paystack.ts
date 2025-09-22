@@ -21,25 +21,39 @@ export class PaystackService {
       return this.publicKey;
     }
 
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (!session) {
-      throw new Error('User must be authenticated');
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error('User must be authenticated');
+      }
+
+      console.log('Getting Paystack public key...');
+      
+      const { data, error } = await supabase.functions.invoke('paystack-payment', {
+        body: { action: 'get-public-key' },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (error) {
+        console.error('Edge function error:', error);
+        throw new Error(`Failed to get Paystack public key: ${error.message}`);
+      }
+
+      if (!data || !data.publicKey) {
+        console.error('Invalid response from edge function:', data);
+        throw new Error('Invalid response from payment service');
+      }
+
+      console.log('Public key retrieved successfully');
+      this.publicKey = data.publicKey;
+      return this.publicKey;
+    } catch (error) {
+      console.error('Error getting public key:', error);
+      throw error;
     }
-
-    const { data, error } = await supabase.functions.invoke('paystack-payment', {
-      body: { action: 'get-public-key' },
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to get Paystack public key');
-    }
-
-    this.publicKey = data.publicKey;
-    return this.publicKey;
   }
 
   async initializePayment(paymentData: PaystackPaymentData): Promise<string> {
@@ -119,15 +133,23 @@ export class PaystackService {
   loadPaystackScript(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (window.PaystackPop) {
+        console.log('Paystack script already loaded');
         resolve();
         return;
       }
 
+      console.log('Loading Paystack script...');
       const script = document.createElement('script');
       script.src = 'https://js.paystack.co/v1/inline.js';
       script.async = true;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error('Failed to load Paystack script'));
+      script.onload = () => {
+        console.log('Paystack script loaded successfully');
+        resolve();
+      };
+      script.onerror = (error) => {
+        console.error('Failed to load Paystack script:', error);
+        reject(new Error('Failed to load Paystack script'));
+      };
       document.head.appendChild(script);
     });
   }
