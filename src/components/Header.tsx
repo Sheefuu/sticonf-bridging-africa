@@ -32,9 +32,14 @@ const Header = () => {
           </a>
         </nav>
         
-        <Button className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
-          <a href="/registration">Register Now</a>
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="ghost" size="sm" asChild>
+            <a href="/auth">Sign In</a>
+          </Button>
+          <Button className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+            <a href="/registration">Register Now</a>
+          </Button>
+        </div>
       </div>
     </header>
   );

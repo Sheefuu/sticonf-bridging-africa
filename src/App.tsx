@@ -15,6 +15,8 @@ import OrganizationRegistration from "./pages/OrganizationRegistration";
 import StateGovernmentRegistration from "./pages/StateGovernmentRegistration";
 import FederalMDARegistration from "./pages/FederalMDARegistration";
 import Payment from "./pages/Payment";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +35,8 @@ const App = () => (
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/sponsorship" element={<Sponsorship />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/registration/individual" element={<IndividualRegistration />} />
           <Route path="/registration/organization" element={<OrganizationRegistration />} />

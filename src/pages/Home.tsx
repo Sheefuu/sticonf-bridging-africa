@@ -37,8 +37,8 @@ const Home = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 border-white text-white bg-white/10 hover:bg-white hover:text-primary transition-all duration-300">
-                Learn More
+              <Button variant="outline" size="lg" className="text-lg px-8 py-4 border-2 border-white text-white bg-white/10 hover:bg-white hover:text-primary transition-all duration-300" asChild>
+                <a href="/about">Learn More</a>
               </Button>
             </div>
           </div>
