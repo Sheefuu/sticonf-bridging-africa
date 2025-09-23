@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff, ArrowRight, User, Mail, Lock } from "lucide-react";
@@ -12,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [resetDialogOpen, setResetDialogOpen] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,7 +22,7 @@ const Auth = () => {
     fullName: ""
   });
 
-  const { signUp, signIn, user } = useAuth();
+  const { signUp, signIn, user, resetPassword } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -97,10 +100,10 @@ const Auth = () => {
       });
       
       if (error) {
-        if (error.message.includes('already registered')) {
+        if (error.message.includes('already registered') || error.message.includes('already been registered')) {
           toast({
-            title: "Account exists",
-            description: "An account with this email already exists. Please sign in instead.",
+            title: "Account may already exist",
+            description: "An account with this email may already exist. Try signing in or use the 'Forgot Password' option if you can't remember your password.",
             variant: "destructive"
           });
         } else {
@@ -111,10 +114,50 @@ const Auth = () => {
           });
         }
       } else {
-        toast({
-          title: "Account created!",
-          description: "Please check your email to confirm your account."
+        // Clear the form on success
+        setFormData({
+          email: "",
+          password: "",
+          confirmPassword: "",
+          fullName: ""
         });
+        
+        toast({
+          title: "🎉 Account created successfully!",
+          description: "Please check your email to confirm your account before signing in."
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const { error } = await resetPassword(resetEmail);
+      
+      if (error) {
+        toast({
+          title: "Reset failed",
+          description: error.message,
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Reset email sent!",
+          description: "Check your email for instructions to reset your password."
+        });
+        setResetDialogOpen(false);
+        setResetEmail("");
       }
     } catch (error) {
       toast({
@@ -194,6 +237,54 @@ const Auth = () => {
                   {isLoading ? "Signing In..." : "Sign In"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+
+                <div className="text-center mt-4">
+                  <Dialog open={resetDialogOpen} onOpenChange={setResetDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="link" className="text-sm text-muted-foreground hover:text-primary">
+                        Forgot your password?
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Reset Password</DialogTitle>
+                        <DialogDescription>
+                          Enter your email address and we'll send you a link to reset your password.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <form onSubmit={handlePasswordReset} className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="reset-email">Email</Label>
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                            <Input
+                              id="reset-email"
+                              type="email"
+                              placeholder="Enter your email"
+                              value={resetEmail}
+                              onChange={(e) => setResetEmail(e.target.value)}
+                              className="pl-10"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() => setResetDialogOpen(false)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button type="submit" className="flex-1" disabled={isLoading}>
+                            {isLoading ? "Sending..." : "Send Reset Link"}
+                          </Button>
+                        </div>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
+                </div>
               </form>
             </TabsContent>
 
