@@ -1,19 +1,15 @@
 import { Button } from "@/components/ui/button";
 import sticonfLogo from "@/assets/sticonf-logo.png";
+import {Link} from 'react-router-dom';
 
 const Header = () => {
   return (
     <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <a href = "/home">
-          <img 
-            src={sticonfLogo} 
-            alt="STIConf Logo" 
-            className="h-10 w-auto"
-        
-          />
-            </a>
+          <Link to="/home">
+              <img src={sticonfLogo} alt="STIConf Logo" className="h-10 w-auto" />
+          </Link>
             
           <div className="text-lg font-semibold text-primary">STIConf 2026</div>
         </div>
