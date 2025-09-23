@@ -25,6 +25,18 @@ Deno.serve(async (req) => {
   try {
     const payload = await req.text()
     const headers = Object.fromEntries(req.headers)
+
+    // Ensure the webhook secret is configured to avoid runtime 500s
+    if (!hookSecret || hookSecret.trim() === '') {
+      console.error('send-auth-email: Missing SEND_AUTH_EMAIL_HOOK_SECRET.');
+      return new Response(
+        JSON.stringify({
+          error: { message: 'Missing SEND_AUTH_EMAIL_HOOK_SECRET. Set this function secret to the same value you used when creating the Auth Hook.' },
+        }),
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
     const wh = new Webhook(hookSecret)
     
     const {
