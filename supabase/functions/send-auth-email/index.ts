@@ -13,6 +13,8 @@ const corsHeaders = {
 }
 
 Deno.serve(async (req) => {
+  console.log('send-auth-email: Function invoked, method:', req.method)
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -25,6 +27,9 @@ Deno.serve(async (req) => {
   try {
     const payload = await req.text()
     const headers = Object.fromEntries(req.headers)
+    
+    console.log('send-auth-email: Received payload length:', payload.length)
+    console.log('send-auth-email: Hook secret configured:', !!hookSecret)
 
     // Ensure the webhook secret is configured to avoid runtime 500s
     if (!hookSecret || hookSecret.trim() === '') {
