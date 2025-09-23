@@ -13,7 +13,7 @@ const Header = () => {
             className="h-10 w-auto"
         
           />
-            <a/>
+            </a>
             
           <div className="text-lg font-semibold text-primary">STIConf 2026</div>
         </div>
