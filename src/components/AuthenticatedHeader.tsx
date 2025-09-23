@@ -70,7 +70,7 @@ const AuthenticatedHeader = () => {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img src={sticonfLogo} alt="STIConf Logo" className="h-10 w-auto" />
-          <div className="text-lg font-semibold text-primary">STIConf 2026</div>
+          
         </div>
         
         <nav className="hidden md:flex items-center space-x-6 ml-auto mr-4">
