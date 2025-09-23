@@ -97,7 +97,7 @@ Deno.serve(async (req) => {
     )
 
     const { error } = await resend.emails.send({
-      from: 'STIConf 2025 <onboarding@resend.dev>',
+      from: 'STIConf 2025 <sticonfinternational@gmail.com>',
       to: [user.email],
       subject: 'Welcome to STIConf 2025 - Confirm Your Email',
       html,
