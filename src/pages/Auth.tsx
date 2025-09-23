@@ -42,6 +42,12 @@ const Auth = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent submission with empty fields
+    if (!formData.email || !formData.password) {
+      return;
+    }
+    
     setIsLoading(true);
 
     try {
@@ -95,30 +101,23 @@ const Auth = () => {
     }
 
     try {
-      const { error } = await signUp(formData.email, formData.password, {
+      const { data, error } = await signUp(formData.email, formData.password, {
         full_name: formData.fullName
       });
       
       if (error) {
-        // Check for various existing account error messages
-        const errorMessage = error.message.toLowerCase();
-        if (errorMessage.includes('already registered') || 
-            errorMessage.includes('already been registered') ||
-            errorMessage.includes('user already registered') ||
-            errorMessage.includes('email already exists') ||
-            errorMessage.includes('duplicate key value')) {
-          toast({
-            title: "Account already exists",
-            description: "An account with this email already exists. Try signing in or use the 'Forgot Password' option if you can't remember your password.",
-            variant: "destructive"
-          });
-        } else {
-          toast({
-            title: "Sign up failed",
-            description: error.message,
-            variant: "destructive"
-          });
-        }
+        toast({
+          title: "Sign up failed",
+          description: error.message,
+          variant: "destructive"
+        });
+      } else if (data?.user && !data?.user?.email_confirmed_at && data?.user?.identities?.length === 0) {
+        // This indicates a repeated signup attempt (existing user)
+        toast({
+          title: "Account already exists",
+          description: "An account with this email already exists. Try signing in or use the 'Forgot Password' option if you can't remember your password.",
+          variant: "destructive"
+        });
       } else {
         // Clear the form on success
         setFormData({
@@ -146,6 +145,12 @@ const Auth = () => {
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent submission with empty email
+    if (!resetEmail) {
+      return;
+    }
+    
     setIsLoading(true);
 
     try {
