@@ -84,28 +84,86 @@ Deno.serve(async (req) => {
 
     console.log('Processing auth email for:', user.email, 'Action:', email_action_type)
 
-    // Only handle signup confirmations
-    if (email_action_type !== 'signup') {
-      console.log('Skipping non-signup email action:', email_action_type)
+    // Handle both signup confirmations and password recovery
+    if (email_action_type !== 'signup' && email_action_type !== 'recovery') {
+      console.log('Skipping unsupported email action:', email_action_type)
       return new Response('OK', { status: 200 })
     }
 
     // Extract user name
     const userName = user.user_metadata?.full_name || user.user_metadata?.name || 'Participant'
 
-    // Render the React Email template
-    const html = await renderAsync(
-      React.createElement(STIConfConfirmationEmail, {
-        userName,
-        confirmationUrl: `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`,
-        token,
-      })
-    )
+    // Determine email content based on action type
+    const isPasswordReset = email_action_type === 'recovery'
+    const subject = isPasswordReset 
+      ? 'STIConf 2025 - Reset Your Password' 
+      : 'Welcome to STIConf 2025 - Confirm Your Email'
+
+    // For password reset, create a simpler HTML email since we don't have a recovery template
+    let html: string
+    if (isPasswordReset) {
+      const resetUrl = `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`
+      html = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Reset Your Password</title>
+          </head>
+          <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+              <h1 style="color: #1a1a1a; margin-bottom: 10px;">STIConf 2025</h1>
+              <h2 style="color: #666; font-weight: normal;">Reset Your Password</h2>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 8px; margin-bottom: 30px;">
+              <p style="margin: 0 0 20px; color: #333; line-height: 1.6;">
+                Hello ${userName},
+              </p>
+              <p style="margin: 0 0 20px; color: #333; line-height: 1.6;">
+                We received a request to reset your password for your STIConf 2025 account. 
+                Click the button below to choose a new password:
+              </p>
+              
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="${resetUrl}" 
+                   style="background: #3b82f6; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: 500;">
+                  Reset Password
+                </a>
+              </div>
+              
+              <p style="margin: 20px 0 0; color: #666; font-size: 14px; line-height: 1.6;">
+                If you didn't request this password reset, you can safely ignore this email. 
+                Your password will remain unchanged.
+              </p>
+              
+              <p style="margin: 20px 0 0; color: #666; font-size: 14px; line-height: 1.6;">
+                If the button doesn't work, you can copy and paste this link into your browser:<br>
+                <span style="word-break: break-all;">${resetUrl}</span>
+              </p>
+            </div>
+            
+            <div style="text-align: center; color: #888; font-size: 12px;">
+              <p>STIConf 2025 - Science, Technology & Innovation Conference</p>
+            </div>
+          </body>
+        </html>
+      `
+    } else {
+      // Use the existing confirmation email template for signup
+      html = await renderAsync(
+        React.createElement(STIConfConfirmationEmail, {
+          userName,
+          confirmationUrl: `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`,
+          token,
+        })
+      )
+    }
 
     const { error } = await resend.emails.send({
       from: 'STIConf 2025 <noreply@send.sticonf.com>',
       to: [user.email],
-      subject: 'Welcome to STIConf 2025 - Confirm Your Email',
+      subject,
       html,
     })
 
@@ -117,7 +175,7 @@ Deno.serve(async (req) => {
       )
     }
 
-    console.log('Confirmation email sent successfully to:', user.email)
+    console.log(`${isPasswordReset ? 'Password reset' : 'Confirmation'} email sent successfully to:`, user.email)
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,

@@ -100,10 +100,16 @@ const Auth = () => {
       });
       
       if (error) {
-        if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+        // Check for various existing account error messages
+        const errorMessage = error.message.toLowerCase();
+        if (errorMessage.includes('already registered') || 
+            errorMessage.includes('already been registered') ||
+            errorMessage.includes('user already registered') ||
+            errorMessage.includes('email already exists') ||
+            errorMessage.includes('duplicate key value')) {
           toast({
-            title: "Account may already exist",
-            description: "An account with this email may already exist. Try signing in or use the 'Forgot Password' option if you can't remember your password.",
+            title: "Account already exists",
+            description: "An account with this email already exists. Try signing in or use the 'Forgot Password' option if you can't remember your password.",
             variant: "destructive"
           });
         } else {
