@@ -147,12 +147,12 @@ const Registration = () => {
                     >
                       +234 809 643 0859
                     </a>
-                    <a 
+                    {/* <a 
                       href="tel:+2348036500822" 
                       className="text-primary hover:underline font-medium"
                     >
                       +234 803 650 0822
-                    </a>
+                    </a> */}
                   </div>
                 </div>
                 <div>
