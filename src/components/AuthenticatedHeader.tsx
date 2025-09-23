@@ -19,18 +19,21 @@ const AuthenticatedHeader = () => {
     toast
   } = useToast();
   const handleSignOut = async () => {
-    const {
-      error
-    } = await signOut();
-    if (error) {
+    const { error } = await signOut();
+    const isHarmlessMissingSession = error && /session\s*.*not\s*.*found/i.test(error.message);
+
+    if (error && !isHarmlessMissingSession) {
       toast({
         title: "Error signing out",
         description: error.message,
         variant: "destructive"
       });
-    } else {
-      navigate('/');
+      return;
     }
+
+    // Treat as success even if server reports missing session
+    setIsMobileMenuOpen(false);
+    navigate('/');
   };
   if (!user) {
     return <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">

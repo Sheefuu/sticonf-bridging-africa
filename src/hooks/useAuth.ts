@@ -55,6 +55,9 @@ export const useAuth = () => {
     const { error } = await supabase.auth.signOut({
       scope: 'local'
     });
+    // Ensure local UI state clears even if the server reports a missing session
+    setSession(null);
+    setUser(null);
     if (error) {
       console.error('Logout error:', error);
     }

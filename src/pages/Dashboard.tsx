@@ -128,15 +128,18 @@ const Dashboard = () => {
 
   const handleSignOut = async () => {
     const { error } = await signOut();
-    if (error) {
+    const isHarmlessMissingSession = error && /session\s*.*not\s*.*found/i.test(error.message);
+
+    if (error && !isHarmlessMissingSession) {
       toast({
         title: "Error signing out",
         description: error.message,
         variant: "destructive"
       });
-    } else {
-      navigate('/');
+      return;
     }
+
+    navigate('/');
   };
 
   const getStatusIcon = (status: string) => {
