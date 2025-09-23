@@ -39,10 +39,7 @@ Deno.serve(async (req) => {
 
     const wh = new Webhook(hookSecret)
     
-    const {
-      user,
-      email_data: { token, token_hash, redirect_to, email_action_type },
-    } = wh.verify(payload, headers) as {
+    let verified: {
       user: {
         email: string
         user_metadata?: {
@@ -58,6 +55,21 @@ Deno.serve(async (req) => {
         site_url: string
       }
     }
+
+    try {
+      verified = wh.verify(payload, headers) as typeof verified
+    } catch (e) {
+      console.error('send-auth-email: Invalid webhook signature, skipping.', e)
+      return new Response(
+        JSON.stringify({ success: true, skipped: true, reason: 'invalid_signature' }),
+        { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
+    const {
+      user,
+      email_data: { token, token_hash, redirect_to, email_action_type },
+    } = verified
 
     console.log('Processing auth email for:', user.email, 'Action:', email_action_type)
 
@@ -80,15 +92,18 @@ Deno.serve(async (req) => {
     )
 
     const { error } = await resend.emails.send({
-      from: 'STIConf 2025 <noreply@resend.dev>',
+      from: 'STIConf 2025 <onboarding@resend.dev>',
       to: [user.email],
       subject: 'Welcome to STIConf 2025 - Confirm Your Email',
       html,
     })
 
     if (error) {
-      console.error('Error sending email:', error)
-      throw error
+      console.error('Error sending email via Resend:', error)
+      return new Response(
+        JSON.stringify({ success: false, reason: 'email_send_failed' }),
+        { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
     }
 
     console.log('Confirmation email sent successfully to:', user.email)
