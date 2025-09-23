@@ -1,26 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { User, Settings, LogOut, Ticket, CreditCard } from "lucide-react";
 import sticonfLogo from "@/assets/sticonf-logo.png";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-
 const AuthenticatedHeader = () => {
-  const { user, signOut } = useAuth();
+  const {
+    user,
+    signOut
+  } = useAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleSignOut = async () => {
-    const { error } = await signOut();
+    const {
+      error
+    } = await signOut();
     if (error) {
       toast({
         title: "Error signing out",
@@ -31,18 +29,12 @@ const AuthenticatedHeader = () => {
       navigate('/');
     }
   };
-
   if (!user) {
-    return (
-      <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
+    return <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <img 
-              src={sticonfLogo} 
-              alt="STIConf Logo" 
-              className="h-10 w-auto"
-            />
-            <div className="text-lg font-semibold text-primary">STIConf 2026</div>
+            <img src={sticonfLogo} alt="STIConf Logo" className="h-10 w-auto" />
+            
           </div>
           
           <nav className="hidden md:flex items-center space-x-6 ml-auto mr-4">
@@ -72,19 +64,12 @@ const AuthenticatedHeader = () => {
             </Button>
           </div>
         </div>
-      </header>
-    );
+      </header>;
   }
-
-  return (
-    <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
+  return <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <img 
-            src={sticonfLogo} 
-            alt="STIConf Logo" 
-            className="h-10 w-auto"
-          />
+          <img src={sticonfLogo} alt="STIConf Logo" className="h-10 w-auto" />
           <div className="text-lg font-semibold text-primary">STIConf 2026</div>
         </div>
         
@@ -166,8 +151,6 @@ const AuthenticatedHeader = () => {
           </DropdownMenu>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default AuthenticatedHeader;
