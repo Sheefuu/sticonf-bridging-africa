@@ -11,7 +11,8 @@ const Header = () => {
             alt="STIConf Logo" 
             className="h-10 w-auto"
           />
-          
+          <div className="text-lg font-semibold text-primary"></div>
+        </div>
         
         <nav className="hidden md:flex items-center space-x-6 ml-auto mr-4">
           <a href="/" className="text-foreground hover:text-primary transition-colors">
