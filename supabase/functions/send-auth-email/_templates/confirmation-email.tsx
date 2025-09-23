@@ -27,7 +27,7 @@ export const STIConfConfirmationEmail = ({
 }: STIConfConfirmationEmailProps) => (
   <Html>
     <Head />
-    <Preview>Welcome to STIConf 2025 - Confirm your email to get started</Preview>
+    <Preview>Welcome to STIConf 2026 - Confirm your email to get started</Preview>
     <Body style={main}>
       <Container style={container}>
         {/* Header with Logo */}
@@ -36,24 +36,24 @@ export const STIConfConfirmationEmail = ({
             src="https://cwzdrudtrbbenftvhgza.supabase.co/storage/v1/object/public/assets/sticonf-logo.png"
             width="120"
             height="40"
-            alt="STIConf 2025"
+            alt="STIConf 2026"
             style={logo}
           />
         </Section>
 
         {/* Main Content */}
         <Section style={content}>
-          <Heading style={h1}>Welcome to STIConf 2025!</Heading>
+          <Heading style={h1}>Welcome to STIConf 2026!</Heading>
           
           <Text style={greeting}>Hello {userName},</Text>
           
           <Text style={text}>
-            Thank you for registering for the <strong>International Conference on Science, Technology & Innovation 2025</strong>. 
+            Thank you for registering for the <strong>International Conference on Science, Technology & Innovation 2026</strong>. 
             We're excited to have you join us for this groundbreaking event where <em>the future is NOW!</em>
           </Text>
 
           <Text style={text}>
-            To complete your registration and secure your spot at STIConf 2025, please confirm your email address by clicking the button below:
+            To complete your registration and secure your spot at STIConf 2026, please confirm your email address by clicking the button below:
           </Text>
 
           {/* Call to Action Button */}
@@ -83,14 +83,14 @@ export const STIConfConfirmationEmail = ({
           <Section style={infoSection}>
             <Heading style={h2}>Conference Details</Heading>
             <Text style={infoText}>
-              <strong>Event:</strong> International Conference on Science, Technology & Innovation 2025<br />
+              <strong>Event:</strong> International Conference on Science, Technology & Innovation 2026<br />
               <strong>Theme:</strong> The Future is NOW!<br />
               <strong>Registration:</strong> Secure your spot today for this premier innovation gathering
             </Text>
           </Section>
 
           <Text style={disclaimerText}>
-            If you didn't create an account with STIConf 2025, you can safely ignore this email.
+            If you didn't create an account with STIConf 2026, you can safely ignore this email.
           </Text>
         </Section>
 
@@ -98,12 +98,12 @@ export const STIConfConfirmationEmail = ({
         <Section style={footer}>
           <Hr style={footerDivider} />
           <Text style={footerText}>
-            <strong>STIConf 2025</strong><br />
+            <strong>STIConf 2026</strong><br />
             International Conference on Science, Technology & Innovation<br />
             Email: <Link href="mailto:sticonfinternational@gmail.com" style={footerLink}>sticonfinternational@gmail.com</Link>
           </Text>
           <Text style={footerCopyright}>
-            © 2025 STIConf. All rights reserved.
+            © 2026 STIConf. All rights reserved.
           </Text>
         </Section>
       </Container>

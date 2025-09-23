@@ -96,8 +96,8 @@ Deno.serve(async (req) => {
     // Determine email content based on action type
     const isPasswordReset = email_action_type === 'recovery'
     const subject = isPasswordReset 
-      ? 'STIConf 2025 - Reset Your Password' 
-      : 'Welcome to STIConf 2025 - Confirm Your Email'
+      ? 'STIConf 2026 - Reset Your Password' 
+      : 'Welcome to STIConf 2026 - Confirm Your Email'
 
     // For password reset, create a simpler HTML email since we don't have a recovery template
     let html: string
@@ -112,7 +112,7 @@ Deno.serve(async (req) => {
           </head>
           <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="color: #1a1a1a; margin-bottom: 10px;">STIConf 2025</h1>
+              <h1 style="color: #1a1a1a; margin-bottom: 10px;">STIConf 2026</h1>
               <h2 style="color: #666; font-weight: normal;">Reset Your Password</h2>
             </div>
             
@@ -121,7 +121,7 @@ Deno.serve(async (req) => {
                 Hello ${userName},
               </p>
               <p style="margin: 0 0 20px; color: #333; line-height: 1.6;">
-                We received a request to reset your password for your STIConf 2025 account. 
+                We received a request to reset your password for your STIConf 2026 account.
                 Click the button below to choose a new password:
               </p>
               
@@ -144,7 +144,7 @@ Deno.serve(async (req) => {
             </div>
             
             <div style="text-align: center; color: #888; font-size: 12px;">
-              <p>STIConf 2025 - Science, Technology & Innovation Conference</p>
+              <p>STIConf 2026 - Science, Technology & Innovation Conference</p>
             </div>
           </body>
         </html>
@@ -161,7 +161,7 @@ Deno.serve(async (req) => {
     }
 
     const { error } = await resend.emails.send({
-      from: 'STIConf 2025 <noreply@send.sticonf.com>',
+      from: 'STIConf 2026 <noreply@send.sticonf.com>',
       to: [user.email],
       subject,
       html,
